@@ -1,13 +1,17 @@
-import Dashboard from "./components/Dashboard";
 import Sidebar from "./components/Sidebar";
+import { Outlet } from "react-router-dom";
 import { Box } from "@mui/material";
 
 const AdminRoot = () => {
   return (
     <Box sx={{ display: "flex", gap: "1.5rem" }} component="section">
-      <Sidebar />
+      <Box sx={{ flex: "1" }}>
+        <Sidebar />
+      </Box>
 
-      <Dashboard />
+      <Box sx={{ flex: "70%" }}>
+        <Outlet />
+      </Box>
     </Box>
   );
 };

@@ -1,11 +1,25 @@
-import { Box, Container, Grid, Stack, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Box, Container, Typography, Link } from "@mui/material";
+import { Link as LinkRouter, useNavigate } from "react-router-dom";
+import AppContext from "../../../context/AppProvider";
+import { toast } from "react-toastify";
+import { useContext } from "react";
+import Metrics from "./Metrics";
 
 const Dashboard = () => {
+  const { userInfo, setUserInfo } = useContext(AppContext);
+  const navigate = useNavigate();
+
+  const handleLogOut = () => {
+    navigate("/");
+    setUserInfo({});
+    localStorage.removeItem("userInfo");
+    toast.success("¡Cerrado sesión exitosamente!");
+  };
+
   return (
     <>
-      <Box sx={{ height: "100svh", flex: "70%", marginTop: ".5rem" }} component="article">
-        <Container maxWidth={"xl"}>
+      <Box sx={{ marginTop: ".5rem" }} component="article">
+        <Container maxWidth={"lg"}>
           <Box
             sx={{
               display: "flex",
@@ -21,7 +35,12 @@ const Dashboard = () => {
             </Box>
 
             <Box>
-              <Link href="#" underline="always">
+              <Link
+                component={LinkRouter}
+                onClick={handleLogOut}
+                underline="always"
+                color={"error"}
+              >
                 SALIR
               </Link>
             </Box>
@@ -136,6 +155,8 @@ const Dashboard = () => {
               </Typography>
             </Box>
           </Box>
+
+          <Metrics userInfo={userInfo} />
         </Container>
       </Box>
     </>
