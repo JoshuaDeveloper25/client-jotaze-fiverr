@@ -11,7 +11,7 @@ const Form = ({ handleSubmit }) => {
         component="section"
         sx={{
           maxWidth: "27rem",
-          margin: "3rem auto",
+          margin: "0rem auto",
         }}
       >
         <Box

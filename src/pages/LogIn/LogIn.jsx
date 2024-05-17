@@ -1,12 +1,13 @@
-import { useMutation } from "@tanstack/react-query";
-import AppContext from "../../context/AppProvider";
-import { getError } from "../../utils/getError";
-import { useNavigate } from "react-router-dom";
-import { Container } from "@mui/material";
-import { toast } from "react-toastify";
-import Form from "./components/Form";
-import { useContext } from "react";
-import axios from "axios";
+import { useMutation } from '@tanstack/react-query';
+import AppContext from '../../context/AppProvider';
+import { getError } from '../../utils/getError';
+import { useNavigate } from 'react-router-dom';
+import { Box, Container } from '@mui/material';
+import { toast } from 'react-toastify';
+import Form from './components/Form';
+import { useContext } from 'react';
+import axios from 'axios';
+import ChatBot from 'react-simple-chatbot';
 
 const LogIn = () => {
   const { setUserInfo } = useContext(AppContext);
@@ -19,15 +20,15 @@ const LogIn = () => {
         userInfo
       ),
     onSuccess: (res) => {
-      localStorage.setItem("userInfo", JSON.stringify(res.data));
-      toast.success("¡Accedido exitosamente!");
+      localStorage.setItem('userInfo', JSON.stringify(res.data));
+      toast.success('¡Accedido exitosamente!');
       setUserInfo(res.data);
       console.log(res);
       axios.defaults.headers.common[
-        "Authorization"
+        'Authorization'
       ] = `Bearer ${res?.data?.token}`;
 
-      if (res.data.role === "client") navigate("/admin/registrar-servicio");
+      if (res.data.role === 'client') navigate('/admin/registrar-servicio');
     },
     onError: (err) => {
       toast.error(getError(err));
@@ -43,8 +44,8 @@ const LogIn = () => {
       password: e?.target.password?.value.trim(),
     };
 
-    if ([userInfo?.email, userInfo?.password].includes("")) {
-      return toast.error("¡Llena los espacios disponibles!");
+    if ([userInfo?.email, userInfo?.password].includes('')) {
+      return toast.error('¡Llena los espacios disponibles!');
     }
 
     mutate({
@@ -53,9 +54,75 @@ const LogIn = () => {
     });
   };
 
+  const steps = [
+    {
+      id: '1',
+      message:
+        'HOLA SOMOS LA EMPRESA G&G GROUP TRADING BRINDAMOS 3 TIPOS DE SERVICIOS ELIJA CUAL DE ELLAS DESEA CONSULTAR',
+      trigger: '2',
+    },
+    {
+      id: '2',
+      options: [
+        { value: 1, label: 'Contable 1', trigger: '3' },
+        { value: 2, label: 'Juridico 2', trigger: '3' },
+        { value: 3, label: 'Transporte 3', trigger: '3' },
+      ],
+    },
+    {
+      id: '3',
+      message:
+        'USTED HA ELEGIDO LA OPCION 1 TENEMOS ESTA LISTA DE SERVICIOS SOBRE EL RUBRO CONTABLE ELIJA UNA:',
+      trigger: '4',
+    },
+    {
+      id: '4',
+      options: [
+        { value: 1, label: '1.CAMBIO DE REGIMEN TRIBUTARIO', trigger: '1' },
+        {
+          value: 2,
+          label: '2.ELABORACION DE ESTADOS FINANCIEROS',
+          trigger: '1',
+        },
+        { value: 3, label: '3. REPORTE FICHA RUC', trigger: '5' },
+      ],
+    },
+    {
+      id: '5',
+      message:
+        'PARA OBTENER LA FICHA RUC LOS DEBE ENVIARNOS SU NUMERO DE RUC Y SU CLAVE SOL, ¿DESEA REGISTRAR SU SERVICIO? ELIJA SI O NO',
+      trigger: '6',
+    },
+    {
+      id: '6',
+      options: [
+        { value: 1, label: 'Si', trigger: '7' },
+        {
+          value: 2,
+          label: 'No',
+          trigger: '1',
+        },
+      ],
+    },
+    {
+      id: '7',
+      message:
+        'CHATBOT: DEBE TENER UNA CUENTA PARA REGISTRAR SU SERVICIO EN EL SIGUIENTE LINK : www.groupgyg.com/registrodeservicio EN CASO NO TENGA UNA CUENTA REGISTRESE EN EL SIGUIENTE LINK www.groupgyg.com/registrodecliente',
+      end: true,
+    },
+  ];
+
   return (
-    <Container maxWidth={"lg"}>
+    <Container maxWidth={'lg'}>
       <Form handleSubmit={handleSubmit} />
+      <Box position={'absolute'} bottom={0} right={20}>
+        <ChatBot
+          handleEnd={({ steps }) => {
+            console.log(steps);
+          }}
+          steps={steps}
+        />
+      </Box>
     </Container>
   );
 };
