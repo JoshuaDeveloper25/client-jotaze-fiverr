@@ -32,7 +32,7 @@ const Form = ({
         display: "flex",
         flexDirection: "column",
         gap: "1.5rem",
-        maxWidth: "40rem",
+        maxWidth: "30rem",
         margin: "auto",
       }}
     >
@@ -47,6 +47,7 @@ const Form = ({
           value={classService}
           onChange={(e) => setClassService(e.target.value)}
           name="tipoServicio"
+          defaultValue={""}
         >
           <MenuItem value={"Contable"}>Contable</MenuItem>
           <MenuItem value={"Juridico"}>Jurídico</MenuItem>
@@ -68,6 +69,7 @@ const Form = ({
             disabled={!classService}
             value={service}
             onChange={(e) => setService(e.target.value)}
+            defaultValue={""}
           >
             <MenuItem value={"contable1"}>
               Cambio de Regimén Tributario
@@ -86,6 +88,7 @@ const Form = ({
             disabled={!classService}
             value={service}
             onChange={(e) => setService(e.target.value)}
+            defaultValue={""}
           >
             <MenuItem value={"juridico1"}>
               Elaboración Minuta Compra-Venta
@@ -104,6 +107,7 @@ const Form = ({
             disabled={!classService}
             value={service}
             onChange={(e) => setService(e.target.value)}
+            defaultValue={""}
           >
             <MenuItem value={"transporte1"}>
               Obtención Permiso Transporte Turism
@@ -122,6 +126,7 @@ const Form = ({
             disabled={!classService}
             value={service}
             onChange={(e) => setService(e.target.value)}
+            defaultValue={""}
           >
             <MenuItem value={"contable1"}>
               Cambio de Regimén Tributario
@@ -139,10 +144,9 @@ const Form = ({
           <TextField
             label="DETALLE"
             sx={{ width: "100%" }}
-            multiline
             focused
-            rows={4}
-            maxRows={4}
+            multiline={true}
+            rows={3}
             name="detalle"
           />
         </Box>

@@ -11,7 +11,7 @@ const RegisterService = () => {
   const [classService, setClassService] = useState("");
   const [service, setService] = useState("");
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isPending, error } = useMutation({
     mutationFn: async (serviceInfo) =>
       await axios.post(
         `${import.meta.env.VITE_BASE_URL}/services/register-service-client`,
@@ -35,22 +35,10 @@ const RegisterService = () => {
     formData.append("numeroServicio", getRandomNumberUnique(10));
     formData.append("codigo", getRandomNumberUnique(4));
 
-    // const serviceInfo = {
-    //   tipoServicio: formData.get("classService"),
-    //   detalle: e?.target?.detalle?.value,
-    //   uploadImages: formData.get("uploadImages"),
-    //   numeroServicio: getRandomNumberUnique(10),
-    //   codigo: getRandomNumberUnique(4),
-    // };
-
-    // if ([serviceInfo?.tipoServicio, serviceInfo?.detalle].includes("")) {
-    //   return toast.error("¡Llena los espacios disponibles!");
-    // }
-
-    // console.log(serviceInfo);
-
     mutate(formData);
   };
+
+  console.log(error)
 
   return (
     <Box component="section">

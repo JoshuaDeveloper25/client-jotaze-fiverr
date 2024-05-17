@@ -14,6 +14,7 @@ import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import AppContext from "../../context/AppProvider";
 import logo from "../../images/logo1.webp";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const Sidebar = () => {
   const { userInfo, setUserInfo } = useContext(AppContext);
@@ -35,6 +36,7 @@ const Sidebar = () => {
     navigate("/");
     toast.success("¡Cerrado sesión exitosamente!");
     localStorage.removeItem("userInfo");
+    axios.defaults.headers.common["Authorization"] = null;
   };
 
   return (
@@ -281,26 +283,32 @@ const Sidebar = () => {
               >
                 AÑADIR SERVICIO
               </MenuItem>
-              <MenuItem
-                to={`/admin/servicio-cliente`}
-                component={NavLink}
-                sx={{
-                  fontSize: ".8rem",
-                  color: `${
-                    location?.pathname === "/admin/servicio-cliente"
-                      ? "#188754"
-                      : "#000"
-                  }`,
-                  background: `${
-                    location?.pathname === "/admin/servicio-cliente"
-                      ? "rgba(211, 211, 211, .2)"
-                      : "transparent"
-                  }`,
-                }}
-                onClick={() => setAnchorEl3(null)}
-              >
-                REGISTRAR SERVICIO X CLIENTE
-              </MenuItem>
+
+              {userInfo?.role === "client" ? null : (
+                <>
+                  <MenuItem
+                    to={`/admin/servicio-cliente`}
+                    component={NavLink}
+                    sx={{
+                      fontSize: ".8rem",
+                      color: `${
+                        location?.pathname === "/admin/servicio-cliente"
+                          ? "#188754"
+                          : "#000"
+                      }`,
+                      background: `${
+                        location?.pathname === "/admin/servicio-cliente"
+                          ? "rgba(211, 211, 211, .2)"
+                          : "transparent"
+                      }`,
+                    }}
+                    onClick={() => setAnchorEl3(null)}
+                  >
+                    REGISTRAR SERVICIO X CLIENTE
+                  </MenuItem>
+                </>
+              )}
+
               {userInfo?.role === "admin" ? (
                 <MenuItem
                   to={`/admin/lista-servicios`}

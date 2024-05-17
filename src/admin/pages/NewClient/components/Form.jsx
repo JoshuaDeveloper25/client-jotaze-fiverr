@@ -21,7 +21,7 @@ const Form = ({ handleSubmit, personType, handleChange }) => {
         display: "flex",
         flexDirection: "column",
         gap: "1.5rem",
-        maxWidth: "40rem",
+        maxWidth: "30rem",
         margin: "auto",
       }}
     >
@@ -35,6 +35,8 @@ const Form = ({ handleSubmit, personType, handleChange }) => {
           value={personType}
           label="TIPO DE PERSONA"
           onChange={handleChange}
+          defaultValue={""}
+
         >
           <MenuItem value={"Natural"}>Natural</MenuItem>
           <MenuItem value={"Juridica"}>Jurídica</MenuItem>

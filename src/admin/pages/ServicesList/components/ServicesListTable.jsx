@@ -15,10 +15,6 @@ import InfoIcon from "@mui/icons-material/Info";
 import { useState } from "react";
 
 const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
   return (
     <Table
       data={services}
@@ -114,7 +110,10 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
 
             return (
               <>
-                <p>{value?.clienteInfo?.nombres || value?.clienteInfo?.nombreRazonSocial}</p>
+                <p>
+                  {value?.clienteInfo?.nombres ||
+                    value?.clienteInfo?.nombreRazonSocial}
+                </p>
               </>
             );
           },
@@ -139,31 +138,7 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
               </Typography>
             </Box>
           ),
-          cell: (info) => {
-            const value = info.cell.row.original;
-            console.log();
-
-            return (
-              <>
-                <Button
-                  onClick={handleOpen}
-                  variant="contained"
-                  size="small"
-                  color="success"
-                >
-                  <VisibilityIcon sx={{ marginRight: ".4rem" }} />
-                  Ver
-                </Button>
-
-                <ModalComponent
-                  modalTitle={"Detalle:"}
-                  modalText={value?.detalle}
-                  handleClose={handleClose}
-                  open={open}
-                />
-              </>
-            );
-          },
+          cell: (info) => <CellCustom info={info} />,
         },
 
         {
@@ -231,22 +206,52 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
 
         {
           id: "col9",
-          header: () => (
-            <Box sx={{ display: "flex", alignItems: "center", gap: ".2rem" }}>
-              <ManageAccountsIcon />
+          cell: (info) => {
+            const value = info?.cell?.row?.original;
 
-              <Typography
-                variant="subtitle1"
-                sx={{
-                  fontWeight: "bold",
-                  textTransform: "uppercase",
-                  fontSize: ".9rem",
-                }}
-              >
-                Acciones
-              </Typography>
-            </Box>
-          ),
+            return (
+              <>
+                {value?.estado === "pendiente" ? (
+                  <>
+                    <Button variant="contained" size="small" color="warning">
+                      Recibir
+                    </Button>
+
+                    <Button
+                      variant="contained"
+                      size="small"
+                      color="info"
+                      sx={{ margin: "0 .4rem" }}
+                    >
+                      Derivar
+                    </Button>
+
+                    <Button variant="contained" size="small" color="error">
+                      Rechazar
+                    </Button>
+                  </>
+                ) : null}
+              </>
+            );
+          },
+          header: () => {
+            return (
+              <Box sx={{ display: "flex", alignItems: "center", gap: ".2rem" }}>
+                <ManageAccountsIcon />
+
+                <Typography
+                  variant="subtitle1"
+                  sx={{
+                    fontWeight: "bold",
+                    textTransform: "uppercase",
+                    fontSize: ".9rem",
+                  }}
+                >
+                  Acciones
+                </Typography>
+              </Box>
+            );
+          },
         },
 
         {
@@ -275,3 +280,32 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
 };
 
 export default ServicesListTable;
+
+const CellCustom = ({ info }) => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const value = info.cell.row.original;
+
+  return (
+    <>
+      <Button
+        onClick={handleOpen}
+        variant="contained"
+        size="small"
+        color="success"
+      >
+        <VisibilityIcon sx={{ marginRight: ".4rem" }} />
+        Ver
+      </Button>
+
+      <ModalComponent
+        modalTitle={"Detalle:"}
+        modalText={value?.detalle}
+        handleClose={handleClose}
+        open={open}
+      />
+    </>
+  );
+};

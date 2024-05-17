@@ -66,12 +66,7 @@ const Form = ({ handleSubmit }) => {
             variant="filled"
             name="password"
           />
-          <Link
-            component="button"
-            onClick={() => {
-              console.info("I'm a button.");
-            }}
-          >
+          <Link component={RouterLink} to={"#"} sx={{ textAlign: "center" }}>
             ¿Olvidaste la contraseña?
           </Link>
           <Button type="submit" variant="contained">

@@ -5,7 +5,7 @@ import { useContext } from "react";
 const PublicRoutes = () => {
   const { userInfo } = useContext(AppContext);
 
-  return userInfo?.token ? <Navigate to={"/admin"} /> : <Outlet />;
+  return userInfo?.token ? <Navigate to={"/admin/"} /> : <Outlet />;
 };
 
 export default PublicRoutes;

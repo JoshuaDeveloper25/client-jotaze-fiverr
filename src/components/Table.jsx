@@ -9,7 +9,13 @@ import {
 } from "@tanstack/react-table";
 import { Box } from "@mui/material";
 
-export const Table = ({ columns, data, filtering, setFiltering }) => {
+export const Table = ({
+  columns,
+  data,
+  filteringColumn,
+  filtering,
+  setFiltering,
+}) => {
   const [sorting, setSorting] = useState([]);
 
   const table = useReactTable({
@@ -22,6 +28,7 @@ export const Table = ({ columns, data, filtering, setFiltering }) => {
     state: {
       sorting,
       globalFilter: filtering,
+      columnFilters: filteringColumn,
     },
     onSortingChange: setSorting,
     onGlobalFilterChange: setFiltering,
@@ -90,7 +97,11 @@ export const Table = ({ columns, data, filtering, setFiltering }) => {
                   <Box
                     component="td"
                     key={cell.id}
-                    sx={{ fontSize: "0.8rem", padding: "0.75rem 0.5rem", textTransform: 'capitalize' }}
+                    sx={{
+                      fontSize: "0.8rem",
+                      padding: "0.75rem 0.5rem",
+                      textTransform: "capitalize",
+                    }}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </Box>
