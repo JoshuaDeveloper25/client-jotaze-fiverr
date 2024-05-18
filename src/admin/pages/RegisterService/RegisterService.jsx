@@ -33,7 +33,9 @@ const RegisterService = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (e?.target?.uploadImages?.value === "") {
+    if ([service, classService, e?.target?.detalle?.value].includes("")) {
+      return toast.error("¡Llena los campos disponibles!");
+    } else if (e?.target?.uploadImages?.value === "") {
       return toast.error("¡Subir un archivo es necesario!");
     }
 
