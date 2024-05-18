@@ -25,11 +25,12 @@ const Form = ({ isPending, handleSubmit, personType, handleChange }) => {
         margin: "auto",
       }}
     >
-      <FormControl focused fullWidth>
+      <FormControl  focused fullWidth>
         <InputLabel focused id="demo-simple-select-label">
           TIPO DE PERSONA
         </InputLabel>
         <Select
+        size="small"
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={personType}

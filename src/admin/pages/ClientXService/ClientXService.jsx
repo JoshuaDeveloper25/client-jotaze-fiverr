@@ -22,9 +22,9 @@ const ClientXService = () => {
       ),
     onSuccess: (data) => {
       toast.success('¡Cliente encontrado!')
-      console.log(data);
     },
     onError: (err) => {
+      toast.error(getError(err));
       console.log(err);
     },
   });
@@ -70,12 +70,12 @@ const ClientXService = () => {
     mutate(formData);
   };
 
+  console.log(searchClientMutation?.data?.data)
+
   const handleSearchClient = (e) => {
     e.preventDefault();
 
-    if (searchClientMutation?.data?.data === null) {
-      return toast.error("No se encontro el cliente...");
-    } else if ([e?.target?.dniRuc?.value].includes("")) {
+    if ([e?.target?.dniRuc?.value].includes("")) {
       return toast.error("¡Busca un cliente primero!");
     }
 

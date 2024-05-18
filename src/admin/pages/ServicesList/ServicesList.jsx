@@ -131,7 +131,7 @@ const ServicesList = () => {
             Buscar por número de servicio:
           </Typography>
           <TextField
-            
+            size="small"
             type="text"
             label="Buscar..."
             variant="filled"
