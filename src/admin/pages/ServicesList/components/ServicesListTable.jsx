@@ -163,7 +163,6 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
           ),
           cell: (info) => {
             const value = info?.cell?.row?.original;
-            console.log(value?.adjunto?.[0]?.cloudinary_url)
             return value?.adjunto?.[0]?.cloudinary_url.includes(".docx") ? (
               <>
                 <Button

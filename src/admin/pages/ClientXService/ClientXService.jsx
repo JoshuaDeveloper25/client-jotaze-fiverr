@@ -21,6 +21,7 @@ const ClientXService = () => {
         `${import.meta.env.VITE_BASE_URL}/users/get-client/${client?.client}`
       ),
     onSuccess: (data) => {
+      toast.success('¡Cliente encontrado!')
       console.log(data);
     },
     onError: (err) => {
@@ -42,7 +43,6 @@ const ClientXService = () => {
       queryClient.invalidateQueries(["allServices"]);
       toast.success(`¡Exitosamente solicitado!`);
       nagivate("/admin/lista-servicios");
-      console.log(res);
     },
     onError: (err) => {
       toast.error(getError(err));
@@ -55,6 +55,8 @@ const ClientXService = () => {
 
     if ([service, classService, e?.target?.detalle?.value].includes("")) {
       return toast.error("¡Llena los campos disponibles!");
+    } else if (e?.target?.uploadImages?.value === '') {
+      return toast.error('¡Subir un archivo es necesario!')
     }
 
     const formData = new FormData(e.target);

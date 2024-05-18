@@ -33,6 +33,10 @@ const RegisterService = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (e?.target?.uploadImages?.value === "") {
+      return toast.error("¡Subir un archivo es necesario!");
+    }
+
     const formData = new FormData(e.target);
     formData.append("fechaHoraAccion", formatoFecha(new Date()));
     formData.append("numeroServicio", getRandomNumberUnique(10));

@@ -316,7 +316,6 @@ const Form = ({
               <AttachFileIcon fontSize="small" /> SELECCIONAR ARCHIVO
               <input
                 accept=".jpg, .pdf"
-                required
                 name="uploadImages"
                 type="file"
                 hidden
