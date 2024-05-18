@@ -11,10 +11,9 @@ import {
 } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import ServicesListTable from "./components/ServicesListTable";
-import { DesktopWindowsRounded } from "@mui/icons-material";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 function filterObjects(array, filterObject) {
@@ -74,11 +73,6 @@ const ServicesList = () => {
   const [filterDateColumn, setFilterDateColumn] = useState([]);
   const [filtering, setFiltering] = useState("");
 
-  console.log('iofjsdio')
-  // useEffect(() => {
-  //   setFilterDateColumn(data?.data);
-  // }, [isFetched]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -126,8 +120,25 @@ const ServicesList = () => {
           component={"form"}
           sx={{ marginBottom: "2.5rem" }}
         >
-          <Box sx={{ display: "flex", alignItems: "end", gap: "1rem" }}>
-            <Box sx={{ flex: "1" }}>
+          <Typography
+            sx={{
+              textTransform: "uppercase",
+              marginBottom: ".4rem",
+            }}
+            variant="body2"
+          >
+            Buscar por número de servicio:
+          </Typography>
+          <TextField
+            
+            type="text"
+            label="Buscar..."
+            variant="filled"
+            name="serviceNumber"
+          />
+
+          <Box sx={{ display: "flex", marginTop: " 1rem ", gap: "1rem" }}>
+            <Box>
               <FormControl focused fullWidth>
                 <InputLabel focused id="demo-simple-select-label">
                   ESTADO
@@ -136,6 +147,7 @@ const ServicesList = () => {
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   label="ESTADO"
+                  sx={{ padding: ".1rem", height: "2.5rem" }}
                   name="estado"
                   defaultValue={""}
                 >
@@ -146,6 +158,7 @@ const ServicesList = () => {
                   <MenuItem value={"atentidos"}>Atendidos</MenuItem>
                 </Select>
               </FormControl>
+
               <Button
                 type="submit"
                 variant="contained"
@@ -155,29 +168,11 @@ const ServicesList = () => {
               </Button>
             </Box>
 
-            <Box sx={{ flex: "1" }}>
-              <Typography
-                sx={{
-                  textTransform: "uppercase",
-                  marginBottom: ".4rem",
-                }}
-                variant="body2"
-              >
-                Buscar por número de servicio:
-              </Typography>
-              <TextField
-                id="filled-basic"
-                type="text"
-                label="Buscar..."
-                variant="filled"
-                name="serviceNumber"
-                sx={{ width: "100%" }}
-              />
-
-              <Box sx={{ display: "flex", gap: ".7rem", marginTop: "1rem" }}>
+            <Box>
+              <Box sx={{ display: "flex", gap: ".7rem" }}>
                 <Box sx={{ flex: "1" }}>
                   <TextField
-                    id="filled-basic"
+                    
                     sx={{ width: "100%" }}
                     type="date"
                     label="DESDE"
@@ -190,7 +185,7 @@ const ServicesList = () => {
                 <Box sx={{ flex: "1" }}>
                   {" "}
                   <TextField
-                    id="filled-basic"
+                    
                     sx={{ width: "100%" }}
                     type="date"
                     label="AL"
@@ -205,7 +200,9 @@ const ServicesList = () => {
         </Box>
 
         <ServicesListTable
-          services={data?.data || filterDateColumn}
+          services={
+            filterDateColumn?.length === 0 ? data?.data : filterDateColumn
+          }
           setFiltering={setFiltering}
           filtering={filtering}
         />

@@ -4,7 +4,7 @@ import { Box, Button, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 import React from "react";
 
-const Form = () => {
+const Form = ({ isPending }) => {
   return (
     <Box
       component={"form"}
@@ -19,7 +19,6 @@ const Form = () => {
       <Box sx={{ display: "flex", gap: "1rem" }}>
         <Box sx={{ flex: "1" }}>
           <TextField
-            id="filled-basic"
             sx={{ width: "100%" }}
             type="number"
             label="DNI"
@@ -30,7 +29,6 @@ const Form = () => {
 
         <Box sx={{ flex: "1" }}>
           <TextField
-            id="filled-basic"
             sx={{ width: "100%" }}
             type="number"
             label="NÚMERO CELULAR"
@@ -43,7 +41,6 @@ const Form = () => {
       <Box sx={{ display: "flex", gap: "1rem" }}>
         <Box sx={{ flex: "1" }}>
           <TextField
-            id="filled-basic"
             sx={{ width: "100%" }}
             type="text"
             label="NOMBRES"
@@ -54,7 +51,6 @@ const Form = () => {
 
         <Box sx={{ flex: "1" }}>
           <TextField
-            id="filled-basic"
             sx={{ width: "100%" }}
             type="text"
             label="APELLIDOS"
@@ -67,7 +63,6 @@ const Form = () => {
       <Box sx={{ display: "flex", gap: "1rem" }}>
         <Box sx={{ flex: "1" }}>
           <TextField
-            id="filled-basic"
             sx={{ width: "100%" }}
             type="date"
             label="FECHA DE NACIMIENTO"
@@ -78,7 +73,6 @@ const Form = () => {
 
         <Box sx={{ flex: "1" }}>
           <TextField
-            id="filled-basic"
             sx={{ width: "100%" }}
             type="email"
             label="CORREO ELECTRÓNICO"
@@ -91,7 +85,6 @@ const Form = () => {
       <Box sx={{ display: "flex", gap: "1rem" }}>
         <Box sx={{ flex: "1" }}>
           <TextField
-            id="filled-basic"
             sx={{ width: "100%" }}
             type="password"
             label="CONTRASEÑA"
@@ -102,7 +95,6 @@ const Form = () => {
 
         <Box sx={{ flex: "1" }}>
           <TextField
-            id="filled-basic"
             sx={{ width: "100%" }}
             type="password"
             label="CONFIRMAR CONTRASEÑA"
@@ -113,7 +105,7 @@ const Form = () => {
       </Box>
 
       <Box sx={{ display: "flex", gap: "1rem" }}>
-        <Button variant="contained" sx={{ width: "100%" }}>
+        <Button disabled={isPending} variant="contained" sx={{ width: "100%" }}>
           <ExitToAppIcon fontSize="small" /> REGISTRAR
         </Button>
 

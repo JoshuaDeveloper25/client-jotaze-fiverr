@@ -4,7 +4,7 @@ import AttachFileIcon from "@mui/icons-material/AttachFile";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AppContext from "../../../../context/AppProvider";
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import {
   Box,
@@ -72,103 +72,105 @@ const Form = ({
           margin: "auto",
         }}
       >
-        <Box
-          sx={{
-            boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
-            borderRadius: ".2rem",
-            padding: "1rem",
-          }}
-          component={"article"}
-        >
+        {searchedClient !== undefined ? (
           <Box
             sx={{
-              display: "flex",
-              justifyContent: "center",
-              textAlign: "center",
-              gap: "1rem",
+              boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+              borderRadius: ".2rem",
+              padding: "1rem",
             }}
+            component={"article"}
           >
-            <Box>
-              <Typography
-                variant={"subtitle1"}
-                sx={{
-                  fontWeight: "bold",
-                  lineHeight: ".6",
-                  textTransform: "uppercase",
-                }}
-              >
-                Nombre ó Razón Social:
-              </Typography>
-              <Typography variant={"subtitle2"}>
-                {searchedClient?.nombreRazonSocial
-                  ? `${searchedClient?.nombreRazonSocial || ""}`
-                  : `${searchedClient?.nombres || ""}` +
-                    " " +
-                    `${searchedClient?.apellidos || " "}`}
-              </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                textAlign: "center",
+                gap: "1rem",
+              }}
+            >
+              <Box>
+                <Typography
+                  variant={"subtitle1"}
+                  sx={{
+                    fontWeight: "bold",
+                    lineHeight: ".6",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Nombre ó Razón Social:
+                </Typography>
+                <Typography variant={"subtitle2"}>
+                  {searchedClient?.nombreRazonSocial
+                    ? `${searchedClient?.nombreRazonSocial || ""}`
+                    : `${searchedClient?.nombres || ""}` +
+                      " " +
+                      `${searchedClient?.apellidos || " "}`}
+                </Typography>
+              </Box>
+
+              <Box>
+                <Typography
+                  variant={"subtitle1"}
+                  sx={{
+                    fontWeight: "bold",
+                    lineHeight: ".6",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Dni/Ruc:
+                </Typography>
+                <Typography variant={"subtitle2"}>
+                  {searchedClient?.dni
+                    ? `${searchedClient?.dni || ""}`
+                    : `${searchedClient?.numeroRuc || ""}`}
+                </Typography>
+              </Box>
             </Box>
 
-            <Box>
-              <Typography
-                variant={"subtitle1"}
-                sx={{
-                  fontWeight: "bold",
-                  lineHeight: ".6",
-                  textTransform: "uppercase",
-                }}
-              >
-                Dni/Ruc:
-              </Typography>
-              <Typography variant={"subtitle2"}>
-                {searchedClient?.dni
-                  ? `${searchedClient?.dni || ""}`
-                  : `${searchedClient?.numeroRuc || ""}`}
-              </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                gap: "1rem",
+                marginTop: " 1rem",
+                textAlign: "center",
+              }}
+            >
+              <Box>
+                <Typography
+                  variant={"subtitle1"}
+                  sx={{
+                    fontWeight: "bold",
+                    lineHeight: ".6",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Celular:
+                </Typography>
+                <Typography variant={"subtitle2"}>
+                  {searchedClient?.numeroCelular}
+                </Typography>
+              </Box>
+
+              <Box>
+                <Typography
+                  variant={"subtitle1"}
+                  sx={{
+                    fontWeight: "bold",
+                    lineHeight: ".6",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Correo:
+                </Typography>
+                <Typography variant={"subtitle2"}>
+                  {searchedClient?.email}
+                </Typography>
+              </Box>
             </Box>
           </Box>
-
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              gap: "1rem",
-              marginTop: " 1rem",
-              textAlign: "center",
-            }}
-          >
-            <Box>
-              <Typography
-                variant={"subtitle1"}
-                sx={{
-                  fontWeight: "bold",
-                  lineHeight: ".6",
-                  textTransform: "uppercase",
-                }}
-              >
-                Celular:
-              </Typography>
-              <Typography variant={"subtitle2"}>
-                {searchedClient?.numeroCelular}
-              </Typography>
-            </Box>
-
-            <Box>
-              <Typography
-                variant={"subtitle1"}
-                sx={{
-                  fontWeight: "bold",
-                  lineHeight: ".6",
-                  textTransform: "uppercase",
-                }}
-              >
-                Correo:
-              </Typography>
-              <Typography variant={"subtitle2"}>
-                {searchedClient?.email}
-              </Typography>
-            </Box>
-          </Box>
-        </Box>
+        ) : null}
 
         <Box
           component={"form"}
@@ -312,7 +314,7 @@ const Form = ({
             </Typography>
             <Button variant="contained" component="label">
               <AttachFileIcon fontSize="small" /> SELECCIONAR ARCHIVO
-              <input name="uploadImages" type="file" hidden />
+              <input required name="uploadImages" type="file" hidden />
             </Button>
           </Box>
 

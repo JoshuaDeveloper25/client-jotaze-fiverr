@@ -2,6 +2,7 @@ import { getRandomNumberUnique } from "../../../utils/getRandomNumberUnique";
 import { formatoFecha } from "../../../utils/dateUtilities";
 import { Box, Container, Typography } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Form from "./components/Form";
 import { useState } from "react";
@@ -10,6 +11,7 @@ import axios from "axios";
 const RegisterService = () => {
   const [classService, setClassService] = useState("");
   const [service, setService] = useState("");
+  const navigate = useNavigate();
 
   const { mutate, isPending, error } = useMutation({
     mutationFn: async (serviceInfo) =>
@@ -19,6 +21,7 @@ const RegisterService = () => {
       ),
     onSuccess: (res) => {
       toast.success(`¡Nuevo Servicio Creado!`);
+      nagivate("/admin/lista-servicios");
       console.log(res);
     },
     onError: (err) => {
@@ -38,10 +41,16 @@ const RegisterService = () => {
     mutate(formData);
   };
 
-  console.log(error)
-
   return (
-    <Box component="section">
+    <Box
+      component="section"
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
       <Container maxWidth={`lg`}>
         <Typography
           sx={{

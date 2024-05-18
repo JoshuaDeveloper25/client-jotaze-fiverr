@@ -12,7 +12,7 @@ import {
 import { Link } from "react-router-dom";
 import React from "react";
 
-const Form = ({ handleSubmit, personType, handleChange }) => {
+const Form = ({ isPending, handleSubmit, personType, handleChange }) => {
   return (
     <Box
       component={"form"}
@@ -36,7 +36,6 @@ const Form = ({ handleSubmit, personType, handleChange }) => {
           label="TIPO DE PERSONA"
           onChange={handleChange}
           defaultValue={""}
-
         >
           <MenuItem value={"Natural"}>Natural</MenuItem>
           <MenuItem value={"Juridica"}>Jurídica</MenuItem>
@@ -49,7 +48,6 @@ const Form = ({ handleSubmit, personType, handleChange }) => {
             style={{ display: `${personType === "Natural" ? "flex" : "none"}` }}
           >
             <TextField
-              id="filled-basic"
               sx={{ width: "100%" }}
               type="number"
               label="DNI"
@@ -62,7 +60,6 @@ const Form = ({ handleSubmit, personType, handleChange }) => {
             style={{ display: `${personType === "Natural" ? "none" : "flex"}` }}
           >
             <TextField
-              id="filled-basic"
               sx={{ width: "100%" }}
               type="number"
               label="N°RUC"
@@ -78,7 +75,6 @@ const Form = ({ handleSubmit, personType, handleChange }) => {
             style={{ display: `${personType === "Natural" ? "flex" : "none"}` }}
           >
             <TextField
-              id="filled-basic"
               sx={{ width: "100%" }}
               type="date"
               label="FECHA DE NACIMIENTO"
@@ -91,7 +87,6 @@ const Form = ({ handleSubmit, personType, handleChange }) => {
             style={{ display: `${personType === "Natural" ? "none" : "flex"}` }}
           >
             <TextField
-              id="filled-basic"
               sx={{ width: "100%" }}
               type="text"
               label="NOMBRES O RAZÓN SOCIAL"
@@ -112,7 +107,6 @@ const Form = ({ handleSubmit, personType, handleChange }) => {
         <Box sx={{ flex: "1" }}>
           {personType === "Natural" ? (
             <TextField
-              id="filled-basic"
               sx={{ width: "100%" }}
               type="text"
               label="NOMBRES"
@@ -126,7 +120,6 @@ const Form = ({ handleSubmit, personType, handleChange }) => {
         <Box sx={{ flex: "1" }}>
           {personType === "Natural" ? (
             <TextField
-              id="filled-basic"
               sx={{ width: "100%" }}
               type="text"
               label="APELLIDOS"
@@ -141,7 +134,6 @@ const Form = ({ handleSubmit, personType, handleChange }) => {
       <Box sx={{ display: "flex", gap: "1rem" }}>
         <Box sx={{ flex: "1" }}>
           <TextField
-            id="filled-basic"
             sx={{ width: "100%" }}
             type="email"
             label="CORREO ELECTRÓNICO"
@@ -153,7 +145,6 @@ const Form = ({ handleSubmit, personType, handleChange }) => {
 
         <Box sx={{ flex: "1" }}>
           <TextField
-            id="filled-basic"
             sx={{ width: "100%" }}
             type="number"
             label="NÚMERO CELULAR"
@@ -167,7 +158,6 @@ const Form = ({ handleSubmit, personType, handleChange }) => {
       <Box sx={{ display: "flex", gap: "1rem" }}>
         <Box sx={{ flex: "1" }}>
           <TextField
-            id="filled-basic"
             sx={{ width: "100%" }}
             type="password"
             label="CONTRASEÑA"
@@ -179,7 +169,6 @@ const Form = ({ handleSubmit, personType, handleChange }) => {
 
         <Box sx={{ flex: "1" }}>
           <TextField
-            id="filled-basic"
             sx={{ width: "100%" }}
             type="password"
             label="CONFIRMAR CONTRASEÑA"
@@ -191,7 +180,12 @@ const Form = ({ handleSubmit, personType, handleChange }) => {
       </Box>
 
       <Box sx={{ display: "flex", gap: "1rem" }}>
-        <Button type="submit" variant="contained" sx={{ width: "100%" }}>
+        <Button
+          disabled={isPending}
+          type="submit"
+          variant="contained"
+          sx={{ width: "100%" }}
+        >
           <ExitToAppIcon fontSize="small" /> REGISTRAR
         </Button>
 

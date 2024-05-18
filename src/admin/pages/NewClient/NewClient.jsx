@@ -9,7 +9,7 @@ import axios from "axios";
 const NewClient = () => {
   const [personType, setPersonType] = useState("");
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: async (userInfo) =>
       await axios.post(
         `${import.meta.env.VITE_BASE_URL}/users/register-client`,
@@ -107,13 +107,20 @@ const NewClient = () => {
   };
 
   return (
-    <Box component="section">
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+      component="section"
+    >
       <Container maxWidth={`lg`}>
         <Typography
           sx={{
             textAlign: "center",
             textTransform: "uppercase",
-            marginTop: "1.4rem",
           }}
           variant="h4"
         >
@@ -136,6 +143,7 @@ const NewClient = () => {
           handleSubmit={handleSubmit}
           personType={personType}
           handleChange={handleChange}
+          isPending={isPending}
         />
       </Container>
     </Box>

@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { formatoFecha } from "../../../utils/dateUtilities";
 import { Box, Container, Typography } from "@mui/material";
 import { getError } from "../../../utils/getError";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Form from "./components/Form";
 import { useState } from "react";
@@ -13,6 +14,7 @@ const ClientXService = () => {
   const [service, setService] = useState("");
   const [client, setClient] = useState("");
   const queryClient = useQueryClient();
+  const nagivate = useNavigate();
 
   const { data, error } = useQuery({
     queryKey: ["serviceDniRuc"],
@@ -32,9 +34,10 @@ const ClientXService = () => {
         serviceInfo
       ),
     onSuccess: (res) => {
-      toast.success(`¡Exitosamente solicitado!`);
-      console.log(res);
       queryClient.invalidateQueries(["allServices"]);
+      toast.success(`¡Exitosamente solicitado!`);
+      nagivate("/admin/lista-servicios");
+      console.log(res);
     },
     onError: (err) => {
       toast.error(getError(err));
@@ -44,6 +47,12 @@ const ClientXService = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (data?.data === undefined) {
+      return toast.error("¡Busca un cliente primero!");
+    } else if ([service, classService].includes("")) {
+      return toast.error("¡Llena los campos disponibles!");
+    }
 
     const formData = new FormData(e.target);
     formData.append("fechaHoraAccion", formatoFecha(new Date()));
@@ -60,7 +69,16 @@ const ClientXService = () => {
   };
 
   return (
-    <Box component="section">
+    <Box
+      component="section"
+      pt={{ md: 16, lg: 5 }}
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
       <Container maxWidth={`lg`}>
         <Typography
           sx={{

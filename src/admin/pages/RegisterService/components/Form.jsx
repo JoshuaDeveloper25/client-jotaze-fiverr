@@ -167,7 +167,7 @@ const Form = ({
         </Typography>
         <Button variant="contained" component="label">
           <AttachFileIcon fontSize="small" /> SELECCIONAR ARCHIVO
-          <input name="uploadImages" type="file" hidden />
+          <input required name="uploadImages" type="file" hidden />
         </Button>
       </Box>
 

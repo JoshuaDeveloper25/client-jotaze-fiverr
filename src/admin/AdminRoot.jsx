@@ -9,7 +9,7 @@ const AdminRoot = () => {
         <Sidebar />
       </Box>
 
-      <Box sx={{ flex: "70%" }}>
+      <Box sx={{ flex: "70%", overflowY: "auto" }}>
         <Outlet />
       </Box>
     </Box>

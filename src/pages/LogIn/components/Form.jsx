@@ -4,7 +4,7 @@ import { Link as RouterLink } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import logo from "../../../images/logo1.webp";
 
-const Form = ({ handleSubmit }) => {
+const Form = ({ handleSubmit, isPending }) => {
   return (
     <>
       <Box
@@ -20,8 +20,7 @@ const Form = ({ handleSubmit }) => {
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            height: "100vh",
-            gap: "1rem",
+            minHeight: "100vh",
           }}
           onSubmit={handleSubmit}
         >
@@ -35,7 +34,7 @@ const Form = ({ handleSubmit }) => {
                 display: "flex",
                 justifyContent: " center",
                 alignItems: "center",
-                margin: "0 auto",
+                margin: "1rem auto auto auto",
               }}
               component="div"
             >
@@ -49,27 +48,34 @@ const Form = ({ handleSubmit }) => {
             </Box>
           </div>
 
-          <Typography sx={{ textAlign: "center" }} variant="h4" component="h1">
+          <Typography
+            sx={{ textAlign: "center", margin: "1rem 0" }}
+            variant="h4"
+            component="h1"
+          >
             Log In
           </Typography>
           <TextField
-            id="filled-basic"
             type="text"
             label="Email Adress"
             variant="filled"
             name="email"
+            sx={{ marginBottom: "1rem" }}
           />
           <TextField
-            id="filled-basic"
             type="password"
             label="Password"
             variant="filled"
             name="password"
           />
-          <Link component={RouterLink} to={"#"} sx={{ textAlign: "center" }}>
+          <Link
+            component={RouterLink}
+            to={"#"}
+            sx={{ textAlign: "center", margin: ".7rem 0" }}
+          >
             ¿Olvidaste la contraseña?
           </Link>
-          <Button type="submit" variant="contained">
+          <Button disabled={isPending} type="submit" variant="contained">
             Login
           </Button>
           <Box
@@ -92,6 +98,7 @@ const Form = ({ handleSubmit }) => {
               component={RouterLink}
               to={`/buscar-servicio`}
               variant="outlined"
+              sx={{ marginBottom: ".8rem" }}
             >
               <SearchIcon />
               Buscar Servicio

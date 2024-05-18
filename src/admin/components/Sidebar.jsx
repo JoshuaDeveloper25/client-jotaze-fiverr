@@ -45,14 +45,13 @@ const Sidebar = () => {
         background: "#020F1F",
         color: "#fff",
         width: "13rem",
-        height: "100svh",
+        minHeight: "100vh",
         position: "sticky",
-        bottom: "0",
         top: "0",
+        bottom: "0",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        height: "100svh",
       }}
     >
       <div>
@@ -276,7 +275,19 @@ const Sidebar = () => {
               open={open3}
             >
               <MenuItem
-                sx={{ fontSize: ".8rem" }}
+                sx={{
+                  fontSize: ".8rem",
+                  color: `${
+                    location?.pathname === "/admin/registrar-servicio"
+                      ? "#188754"
+                      : "#000"
+                  }`,
+                  background: `${
+                    location?.pathname === "/admin/registrar-servicio"
+                      ? "rgba(211, 211, 211, .2)"
+                      : "transparent"
+                  }`,
+                }}
                 onClick={() => setAnchorEl3(null)}
                 to={`/admin/registrar-servicio`}
                 component={NavLink}
@@ -285,28 +296,26 @@ const Sidebar = () => {
               </MenuItem>
 
               {userInfo?.role === "client" ? null : (
-                <>
-                  <MenuItem
-                    to={`/admin/servicio-cliente`}
-                    component={NavLink}
-                    sx={{
-                      fontSize: ".8rem",
-                      color: `${
-                        location?.pathname === "/admin/servicio-cliente"
-                          ? "#188754"
-                          : "#000"
-                      }`,
-                      background: `${
-                        location?.pathname === "/admin/servicio-cliente"
-                          ? "rgba(211, 211, 211, .2)"
-                          : "transparent"
-                      }`,
-                    }}
-                    onClick={() => setAnchorEl3(null)}
-                  >
-                    REGISTRAR SERVICIO X CLIENTE
-                  </MenuItem>
-                </>
+                <MenuItem
+                  to={`/admin/servicio-cliente`}
+                  component={NavLink}
+                  sx={{
+                    fontSize: ".8rem",
+                    color: `${
+                      location?.pathname === "/admin/servicio-cliente"
+                        ? "#188754"
+                        : "#000"
+                    }`,
+                    background: `${
+                      location?.pathname === "/admin/servicio-cliente"
+                        ? "rgba(211, 211, 211, .2)"
+                        : "transparent"
+                    }`,
+                  }}
+                  onClick={() => setAnchorEl3(null)}
+                >
+                  REGISTRAR SERVICIO X CLIENTE
+                </MenuItem>
               )}
 
               {userInfo?.role === "admin" ? (

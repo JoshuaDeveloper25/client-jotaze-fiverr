@@ -11,6 +11,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import NumbersIcon from "@mui/icons-material/Numbers";
+import { Link as RouterLink } from "react-router-dom";
 import InfoIcon from "@mui/icons-material/Info";
 import { useState } from "react";
 
@@ -160,6 +161,19 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
               </Typography>
             </Box>
           ),
+          cell: (info) => {
+            const value = info?.cell?.row?.original;
+            return (
+              <Button
+                component={RouterLink}
+                sx={{ textDecoration: "transparent", color: "black" }}
+                to={value?.adjunto?.[0]?.cloudinary_url}
+                target="_blank"
+              >
+                <Typography variant="body2">Ver Visualización</Typography>
+              </Button>
+            );
+          },
         },
 
         {

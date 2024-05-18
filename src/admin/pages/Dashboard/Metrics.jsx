@@ -1,12 +1,37 @@
 import StackedBarChartIcon from "@mui/icons-material/StackedBarChart";
+import {
+  formatearFechaMonth,
+  obtenerFechas,
+} from "../../../utils/dateUtilities";
 import TableChartIcon from "@mui/icons-material/TableChart";
 import AnalyticsIcon from "@mui/icons-material/Analytics";
 import { axisClasses } from "@mui/x-charts/ChartsAxis";
 import { BarChart, LineChart } from "@mui/x-charts";
+import { useQuery } from "@tanstack/react-query";
 import { Box, Typography } from "@mui/material";
+import axios from "axios";
 
 const Metrics = ({ userInfo }) => {
-  const sample = [1, 10, 30, 50, 70, 90, 100];
+  const fechas = obtenerFechas();
+
+  const { data, isPending, error } = useQuery({
+    queryKey: ["todasConsultas"],
+    queryFn: async () =>
+      await axios.get(
+        `${import.meta.env.VITE_BASE_URL}/chat-bot/get-consultas?fecha1=${
+          fechas.fecha1
+        }&fecha2=${fechas.fecha2}&fecha3=${fechas.fecha3}`
+      ),
+  });
+
+  if (isPending) {
+    return <p>Cargando...</p>;
+  }
+
+  const fechasMapeadas = data?.data?.map((fechas) => ({
+    ...fechas,
+    fechaNombre: formatearFechaMonth(fechas?.fecha),
+  }));
 
   const dataset = [
     {
@@ -73,17 +98,15 @@ const Metrics = ({ userInfo }) => {
               </Typography>
 
               <LineChart
-                xAxis={[{ data: sample }]}
-                yAxis={[
-                  { id: "linearAxis", scaleType: "linear" },
-                  { id: "logAxis", scaleType: "log" },
+                dataset={fechasMapeadas}
+                xAxis={[
+                  {
+                    scaleType: "band",
+                    dataKey: "fechaNombre",
+                  },
                 ]}
-                series={[
-                  { yAxisKey: "linearAxis", data: sample, label: "linear" },
-                  { yAxisKey: "logAxis", data: sample, label: "log" },
-                ]}
-                leftAxis="linearAxis"
-                rightAxis="logAxis"
+                series={[{ dataKey: "count" }]}
+                {...otherSetting}
                 height={300}
               />
             </Box>
@@ -110,6 +133,7 @@ const Metrics = ({ userInfo }) => {
                 <AnalyticsIcon />
                 Cantidad de servicios atendidos
               </Typography>
+
               <BarChart
                 dataset={dataset}
                 xAxis={[
@@ -118,9 +142,7 @@ const Metrics = ({ userInfo }) => {
                     dataKey: "month",
                   },
                 ]}
-                series={[
-                  { dataKey: "seoul", label: "Seoul rainfall", valueFormatter },
-                ]}
+                series={[{ dataKey: "seoul" }]}
                 {...otherSetting}
               />
             </Box>

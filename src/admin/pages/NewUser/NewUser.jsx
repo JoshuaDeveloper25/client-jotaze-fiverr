@@ -6,7 +6,7 @@ import Form from "./components/Form";
 import axios from "axios";
 
 const NewUser = () => {
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: async (userInfo) =>
       await axios.post(
         `${import.meta.env.VITE_BASE_URL}/users/register-client`,
@@ -68,7 +68,15 @@ const NewUser = () => {
   };
 
   return (
-    <Box component="section">
+    <Box
+      component="section"
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
       <Container maxWidth={`lg`}>
         <Typography
           sx={{
@@ -93,7 +101,7 @@ const NewUser = () => {
         </Typography>
 
         {/* Formulario */}
-        <Form />
+        <Form isPending={isPending} />
       </Container>
     </Box>
   );
