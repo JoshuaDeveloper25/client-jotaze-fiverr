@@ -21,7 +21,7 @@ const RegisterService = () => {
       ),
     onSuccess: (res) => {
       toast.success(`¡Nuevo Servicio Creado!`);
-      nagivate("/admin/lista-servicios");
+      navigate("/admin/lista-servicios");
       console.log(res);
     },
     onError: (err) => {

@@ -13,7 +13,7 @@ const ClientXService = () => {
   const [classService, setClassService] = useState("");
   const [service, setService] = useState("");
   const queryClient = useQueryClient();
-  const nagivate = useNavigate();
+  const navigate = useNavigate();
 
   const searchClientMutation = useMutation({
     mutationFn: async (client) =>
@@ -35,14 +35,14 @@ const ClientXService = () => {
         `${
           import.meta.env.VITE_BASE_URL
         }/services/register-service-admin-user/${
-          searchClientMutation?.data?._id
+          searchClientMutation?.data?.data?._id
         }`,
         serviceInfo
       ),
     onSuccess: (res) => {
       queryClient.invalidateQueries(["allServices"]);
       toast.success(`¡Exitosamente solicitado!`);
-      nagivate("/admin/lista-servicios");
+      navigate("/admin/lista-servicios");
     },
     onError: (err) => {
       toast.error(getError(err));
