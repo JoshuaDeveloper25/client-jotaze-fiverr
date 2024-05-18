@@ -72,7 +72,7 @@ const Form = ({
           margin: "auto",
         }}
       >
-        {searchedClient !== undefined ? (
+        {searchedClient ? (
           <Box
             sx={{
               boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
@@ -314,7 +314,13 @@ const Form = ({
             </Typography>
             <Button variant="contained" component="label">
               <AttachFileIcon fontSize="small" /> SELECCIONAR ARCHIVO
-              <input required name="uploadImages" type="file" hidden />
+              <input
+                accept=".jpg, .pdf"
+                required
+                name="uploadImages"
+                type="file"
+                hidden
+              />
             </Button>
           </Box>
 

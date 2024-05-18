@@ -163,15 +163,29 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
           ),
           cell: (info) => {
             const value = info?.cell?.row?.original;
-            return (
-              <Button
-                component={RouterLink}
-                sx={{ textDecoration: "transparent", color: "black" }}
-                to={value?.adjunto?.[0]?.cloudinary_url}
-                target="_blank"
-              >
-                <Typography variant="body2">Ver Visualización</Typography>
-              </Button>
+            console.log(value?.adjunto?.[0]?.cloudinary_url)
+            return value?.adjunto?.[0]?.cloudinary_url.includes(".docx") ? (
+              <>
+                <Button
+                  component={RouterLink}
+                  sx={{ textDecoration: "transparent", color: "black" }}
+                  to={value?.adjunto?.[0]?.cloudinary_url}
+                  target="_blank"
+                >
+                  <Typography variant="body2">Descargar PDF</Typography>
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  component={RouterLink}
+                  sx={{ textDecoration: "transparent", color: "black" }}
+                  to={value?.adjunto?.[0]?.cloudinary_url}
+                  target="_blank"
+                >
+                  <Typography variant="body2">Ver Visualización</Typography>
+                </Button>
+              </>
             );
           },
         },
@@ -281,7 +295,7 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
                   fontWeight: "bold",
                   textTransform: "uppercase",
                   fontSize: ".9rem",
-                }}
+                }} 
               >
                 Obvervación
               </Typography>

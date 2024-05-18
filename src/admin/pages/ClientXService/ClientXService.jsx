@@ -12,17 +12,20 @@ import axios from "axios";
 const ClientXService = () => {
   const [classService, setClassService] = useState("");
   const [service, setService] = useState("");
-  const [client, setClient] = useState("");
   const queryClient = useQueryClient();
   const nagivate = useNavigate();
 
-  const { data, error } = useQuery({
-    queryKey: ["serviceDniRuc"],
-    queryFn: async () =>
+  const searchClientMutation = useMutation({
+    mutationFn: async (client) =>
       await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/users/get-client/${client}`
+        `${import.meta.env.VITE_BASE_URL}/users/get-client/${client?.client}`
       ),
-    enabled: !!client,
+    onSuccess: (data) => {
+      console.log(data);
+    },
+    onError: (err) => {
+      console.log(err);
+    },
   });
 
   const { mutate, isPending } = useMutation({
@@ -30,7 +33,9 @@ const ClientXService = () => {
       await axios.post(
         `${
           import.meta.env.VITE_BASE_URL
-        }/services/register-service-admin-user/${data?.data?._id}`,
+        }/services/register-service-admin-user/${
+          searchClientMutation?.data?._id
+        }`,
         serviceInfo
       ),
     onSuccess: (res) => {
@@ -48,9 +53,7 @@ const ClientXService = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (data?.data === undefined) {
-      return toast.error("¡Busca un cliente primero!");
-    } else if ([service, classService].includes("")) {
+    if ([service, classService, e?.target?.detalle?.value].includes("")) {
       return toast.error("¡Llena los campos disponibles!");
     }
 
@@ -65,7 +68,13 @@ const ClientXService = () => {
   const handleSearchClient = (e) => {
     e.preventDefault();
 
-    setClient(e?.target?.dniRuc?.value);
+    if (searchClientMutation?.data?.data === null) {
+      return toast.error("No se encontro el cliente...");
+    } else if ([e?.target?.dniRuc?.value].includes("")) {
+      return toast.error("¡Busca un cliente primero!");
+    }
+
+    searchClientMutation?.mutate({ client: e?.target?.dniRuc?.value });
   };
 
   return (
@@ -84,7 +93,9 @@ const ClientXService = () => {
           sx={{
             textAlign: "center",
             textTransform: "uppercase",
-            marginTop: "1.4rem",
+            marginTop: `${
+              searchClientMutation?.data?.data ? "10rem" : "1.4rem"
+            }`,
             marginBottom: "1rem",
           }}
           variant="h4"
@@ -94,7 +105,7 @@ const ClientXService = () => {
 
         {/* Formulario */}
         <Form
-          searchedClient={data?.data}
+          searchedClient={searchClientMutation?.data?.data}
           handleSearchClient={handleSearchClient}
           isPending={isPending}
           handleSubmit={handleSubmit}

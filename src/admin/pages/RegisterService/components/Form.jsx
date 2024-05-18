@@ -167,7 +167,13 @@ const Form = ({
         </Typography>
         <Button variant="contained" component="label">
           <AttachFileIcon fontSize="small" /> SELECCIONAR ARCHIVO
-          <input required name="uploadImages" type="file" hidden />
+          <input
+            accept=".jpg, .pdf"
+            required
+            name="uploadImages"
+            type="file"
+            hidden
+          />
         </Button>
       </Box>
 
