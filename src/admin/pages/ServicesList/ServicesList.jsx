@@ -70,6 +70,7 @@ const ServicesList = () => {
         `${import.meta.env.VITE_BASE_URL}/services/get-all-services`
       ),
   });
+
   const [filterDateColumn, setFilterDateColumn] = useState([]);
   const [filtering, setFiltering] = useState("");
 

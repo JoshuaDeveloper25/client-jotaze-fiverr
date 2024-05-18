@@ -29,6 +29,8 @@ const ClientXService = () => {
     },
   });
 
+
+  console.log(searchClientMutation?.data?.data?._id)
   const { mutate, isPending } = useMutation({
     mutationFn: async (serviceInfo) =>
       await axios.post(
@@ -55,9 +57,10 @@ const ClientXService = () => {
 
     if ([service, classService, e?.target?.detalle?.value].includes("")) {
       return toast.error("¡Llena los campos disponibles!");
-    } else if (e?.target?.uploadImages?.value === '') {
-      return toast.error('¡Subir un archivo es necesario!')
-    }
+    } 
+    // else if (e?.target?.uploadImages?.value === '') {
+    //   return toast.error('¡Subir un archivo es necesario!')
+    // }
 
     const formData = new FormData(e.target);
     formData.append("fechaHoraAccion", formatoFecha(new Date()));

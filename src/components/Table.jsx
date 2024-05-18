@@ -7,7 +7,7 @@ import {
   getSortedRowModel,
   getFilteredRowModel,
 } from "@tanstack/react-table";
-import { Box } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 
 export const Table = ({
   columns,
@@ -112,47 +112,52 @@ export const Table = ({
         </Box>
       </Box>
 
-      {/* <footer className="flex justify-between mt-5">
-        <div className="flex items-center gap-2">
+      <Box
+        component="footer"
+        sx={{
+          display: "flex",
+          justifyContent: "between",
+          marginTop: "2.5rem",
+          marginBottom: "1rem",
+        }}
+      >
+        <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
           {table.getCanPreviousPage() && (
-            <button
-              className="btn inline-flex px-3 gap-3"
-              onClick={() => table.previousPage()}
-            >
-              Prev Page
-            </button>
+            <Button onClick={() => table.previousPage()}>Pág Prev</Button>
           )}
 
           {table.getCanNextPage() && (
-            <button
-              className="btn inline-flex px-3 gap-3"
-              onClick={() => table.nextPage()}
-            >
-              Next Page
-            </button>
+            <Button onClick={() => table.nextPage()}>Siguiente Pág</Button>
           )}
-        </div>
+        </Box>
 
-        <form
-          className="flex gap-3 items-center"
+        <Box
+          component="form"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: "1.5rem",
+          }}
           onSubmit={(e) => {
             e.preventDefault();
             table.setPageIndex(e.target.page.value);
           }}
         >
-          <span>Page</span>
-
-          <input
+          <span>Página</span>
+          <TextField
+            sx={{
+              display: "inline-block",
+              textAlign: "center",
+            }}
+            size="small"
             type="number"
             name="page"
             id="page"
             min="0"
-            className="inline-block rounded border w-12 py-1 text-center border-b-gray-300"
           />
-
-          <span>of {table.getPageCount()}</span>
-        </form>
-      </footer> */}
+          <span>de {table.getPageCount()}</span>
+        </Box>
+      </Box>
     </Box>
   );
 };

@@ -49,6 +49,7 @@ const Form = ({
               type="text"
               name="dniRuc"
               focused
+              size="small"
             />
           </Box>
 
@@ -186,6 +187,7 @@ const Form = ({
               CLASE DE SERVICIO
             </InputLabel>
             <Select
+              size="small"
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               label="CLASE DE SERVICIO"
@@ -200,7 +202,7 @@ const Form = ({
             </Select>
           </FormControl>
 
-          <FormControl focused fullWidth>
+          <FormControl size="small" focused fullWidth>
             <InputLabel focused id="demo-simple-select-label">
               SERVICIO
             </InputLabel>
