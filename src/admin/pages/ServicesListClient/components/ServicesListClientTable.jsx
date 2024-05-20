@@ -7,10 +7,10 @@ import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import TroubleshootIcon from "@mui/icons-material/Troubleshoot";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import NumbersIcon from "@mui/icons-material/Numbers";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
 import InfoIcon from "@mui/icons-material/Info";
 import EditFormClient from "./EditFormClient";
 import { useContext, useState } from "react";
@@ -18,6 +18,7 @@ import AppContext from "../../../../context/AppProvider";
 import { useMutation } from "@tanstack/react-query";
 
 const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
+  console.log(services)
   return (
     <Table
       data={services}
