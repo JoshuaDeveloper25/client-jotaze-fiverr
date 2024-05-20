@@ -1,14 +1,16 @@
 import { getRandomNumberUnique } from "../../../utils/getRandomNumberUnique";
 import { formatoFecha } from "../../../utils/dateUtilities";
+import AppContext from "../../../context/AppProvider";
 import { Box, Container, Typography } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import Form from "./components/Form";
-import { useState } from "react";
 import axios from "axios";
 
 const RegisterService = () => {
+  const { userInfo } = useContext(AppContext);
   const [classService, setClassService] = useState("");
   const [service, setService] = useState("");
   const navigate = useNavigate();
@@ -21,8 +23,13 @@ const RegisterService = () => {
       ),
     onSuccess: (res) => {
       toast.success(`¡Nuevo Servicio Creado!`);
-      navigate("/admin/lista-servicios");
       console.log(res);
+
+      if (userInfo?.role === "admin") {
+        navigate("/admin/lista-servicios");
+      } else {
+        navigate("/admin/lista-servicios-cliente");
+      }
     },
     onError: (err) => {
       toast.error(getError(err));

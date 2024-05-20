@@ -16,7 +16,7 @@ const style = {
   overflow: "auto",
 };
 
-const ModalComponent = ({ modalTitle, modalText, handleClose, open }) => {
+const ModalComponent = ({ modalTitle, modalText, handleClose, open, children }) => {
   return (
     <>
       <Modal open={open} onClose={handleClose}>
@@ -37,6 +37,7 @@ const ModalComponent = ({ modalTitle, modalText, handleClose, open }) => {
             component="h2"
           >
             {modalText}
+            {children}
           </Typography>
         </Box>
       </Modal>

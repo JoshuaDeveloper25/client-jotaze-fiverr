@@ -2,14 +2,16 @@ import { getRandomNumberUnique } from "../../../utils/getRandomNumberUnique";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { formatoFecha } from "../../../utils/dateUtilities";
 import { Box, Container, Typography } from "@mui/material";
+import AppContext from "../../../context/AppProvider";
 import { getError } from "../../../utils/getError";
 import { useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import Form from "./components/Form";
-import { useState } from "react";
 import axios from "axios";
 
 const ClientXService = () => {
+  const { userInfo } = useContext(AppContext);
   const [classService, setClassService] = useState("");
   const [service, setService] = useState("");
   const queryClient = useQueryClient();
@@ -21,7 +23,7 @@ const ClientXService = () => {
         `${import.meta.env.VITE_BASE_URL}/users/get-client/${client?.client}`
       ),
     onSuccess: (data) => {
-      toast.success('¡Cliente encontrado!')
+      toast.success("¡Cliente encontrado!");
     },
     onError: (err) => {
       toast.error(getError(err));
@@ -29,8 +31,7 @@ const ClientXService = () => {
     },
   });
 
-
-  console.log(searchClientMutation?.data?.data?._id)
+  console.log(searchClientMutation?.data?.data?._id);
   const { mutate, isPending } = useMutation({
     mutationFn: async (serviceInfo) =>
       await axios.post(
@@ -42,7 +43,12 @@ const ClientXService = () => {
         serviceInfo
       ),
     onSuccess: (res) => {
-      queryClient.invalidateQueries(["allServices"]);
+      if (userInfo?.role === "admin") {
+        queryClient.invalidateQueries(["allServices"]);
+      } else {
+        queryClient.invalidateQueries(["allServicesClient"]);
+      }
+
       toast.success(`¡Exitosamente solicitado!`);
       navigate("/admin/lista-servicios");
     },
@@ -57,7 +63,7 @@ const ClientXService = () => {
 
     if ([service, classService, e?.target?.detalle?.value].includes("")) {
       return toast.error("¡Llena los campos disponibles!");
-    } 
+    }
     // else if (e?.target?.uploadImages?.value === '') {
     //   return toast.error('¡Subir un archivo es necesario!')
     // }
@@ -70,7 +76,7 @@ const ClientXService = () => {
     mutate(formData);
   };
 
-  console.log(searchClientMutation?.data?.data)
+  console.log(searchClientMutation?.data?.data);
 
   const handleSearchClient = (e) => {
     e.preventDefault();

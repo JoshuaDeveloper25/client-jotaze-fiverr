@@ -1,17 +1,22 @@
+import ModalComponent from "../../admin/components/ModalComponent";
 import { formatoFechaYearMonth } from "../../utils/dateUtilities";
+import { Box, Button, Container, TextField } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
+import SearchIcon from "@mui/icons-material/Search";
 import AppContext from "../../context/AppProvider";
 import { getError } from "../../utils/getError";
 import { useNavigate } from "react-router-dom";
-import { Box, Container } from "@mui/material";
+import { useContext, useState } from "react";
 import ChatBot from "react-simple-chatbot";
 import { toast } from "react-toastify";
 import Form from "./components/Form";
-import { useContext } from "react";
 import axios from "axios";
 
 const LogIn = () => {
   const { setUserInfo } = useContext(AppContext);
+  const [serviceNumber, setServiceNumber] = useState();
+  const handleClose = () => setOpen(false);
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
   const { mutate, isPending } = useMutation({
@@ -29,7 +34,8 @@ const LogIn = () => {
         "Authorization"
       ] = `Bearer ${res?.data?.token}`;
 
-      if (res.data.role === "client") navigate("/admin/registrar-servicio");
+      if (res.data.role === "client" || res?.data?.role === "user")
+        navigate("/admin/registrar-servicio");
     },
     onError: (err) => {
       toast.error(getError(err));
@@ -45,6 +51,24 @@ const LogIn = () => {
       ),
     onSuccess: (res) => {
       console.log(res);
+    },
+    onError: (err) => {
+      toast.error(getError(err));
+      console.log(err);
+    },
+  });
+
+  const searchServiceNumber = useMutation({
+    mutationFn: async () =>
+      await axios.get(
+        `${
+          import.meta.env.VITE_BASE_URL
+        }/services/search-service-by-no-solicitud/${serviceNumber}`
+      ),
+    onSuccess: (data) => {
+      toast.success("¡Cliente encontrado!");
+      navigate(`/buscar-servicio`, { state: { info: data?.data } });
+      console.log(data);
     },
     onError: (err) => {
       toast.error(getError(err));
@@ -128,9 +152,22 @@ const LogIn = () => {
     },
   ];
 
+  const searchService = () => {
+    if ([serviceNumber].includes("")) {
+      return toast.error("¡Llena los campos disponibles!");
+    }
+
+    searchServiceNumber?.mutate({ serviceNumber: serviceNumber });
+  };
+
   return (
     <Container maxWidth={"lg"}>
-      <Form handleSubmit={handleSubmit} isPending={isPending} />
+      <Form
+        handleSubmit={handleSubmit}
+        isPending={isPending}
+        setOpen={setOpen}
+        open={open}
+      />
       <Box position={"fixed"} bottom={0} right={20}>
         <ChatBot
           handleEnd={({ steps }) => {
@@ -139,9 +176,35 @@ const LogIn = () => {
               createdAt: formatoFechaYearMonth(new Date()),
             });
           }}
+          floating={true}
           steps={steps}
         />
       </Box>
+
+      <ModalComponent
+        modalTitle={"Buscar Servicio"}
+        handleClose={handleClose}
+        open={open}
+      >
+        <TextField
+          type="text"
+          label="Número de Solicitud"
+          variant="filled"
+          name="requestNumber"
+          value={serviceNumber}
+          onChange={(e) => setServiceNumber(e?.target?.value)}
+          sx={{ marginBottom: "1rem", width: "100%" }}
+        />
+
+        <Button
+          variant="outlined"
+          sx={{ marginBottom: ".8rem", width: "100%" }}
+          onClick={searchService}
+        >
+          <SearchIcon />
+          Buscar Servicio
+        </Button>
+      </ModalComponent>
     </Container>
   );
 };

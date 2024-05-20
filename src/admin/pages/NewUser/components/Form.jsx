@@ -4,10 +4,11 @@ import { Box, Button, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 import React from "react";
 
-const Form = ({ isPending }) => {
+const Form = ({ handleSubmit, isPending }) => {
   return (
     <Box
       component={"form"}
+      onSubmit={handleSubmit}
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -24,6 +25,7 @@ const Form = ({ isPending }) => {
             label="DNI"
             focused
             size="small"
+            name="dni"
           />
         </Box>
 
@@ -34,6 +36,7 @@ const Form = ({ isPending }) => {
             label="NÚMERO CELULAR"
             focused
             size="small"
+            name="phoneNumber"
           />
         </Box>
       </Box>
@@ -46,6 +49,7 @@ const Form = ({ isPending }) => {
             label="NOMBRES"
             focused
             size="small"
+            name="firstName"
           />
         </Box>
 
@@ -56,6 +60,7 @@ const Form = ({ isPending }) => {
             label="APELLIDOS"
             focused
             size="small"
+            name="lastName"
           />
         </Box>
       </Box>
@@ -68,6 +73,7 @@ const Form = ({ isPending }) => {
             label="FECHA DE NACIMIENTO"
             focused
             size="small"
+            name="birthday"
           />
         </Box>
 
@@ -78,6 +84,7 @@ const Form = ({ isPending }) => {
             label="CORREO ELECTRÓNICO"
             focused
             size="small"
+            name="email"
           />
         </Box>
       </Box>
@@ -90,6 +97,7 @@ const Form = ({ isPending }) => {
             label="CONTRASEÑA"
             focused
             size="small"
+            name="password"
           />
         </Box>
 
@@ -100,12 +108,18 @@ const Form = ({ isPending }) => {
             label="CONFIRMAR CONTRASEÑA"
             focused
             size="small"
+            name="repeatPassword"
           />
         </Box>
       </Box>
 
       <Box sx={{ display: "flex", gap: "1rem" }}>
-        <Button disabled={isPending} variant="contained" sx={{ width: "100%" }}>
+        <Button
+          type="submit"
+          disabled={isPending}
+          variant="contained"
+          sx={{ width: "100%" }}
+        >
           <ExitToAppIcon fontSize="small" /> REGISTRAR
         </Button>
 

@@ -9,11 +9,11 @@ const NewUser = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: async (userInfo) =>
       await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/users/register-client`,
+        `${import.meta.env.VITE_BASE_URL}/users/register-user`,
         userInfo
       ),
     onSuccess: (res) => {
-      toast.success(`¡Nuevo Cliente Creado!`);
+      toast.success(`¡Nuevo Usuario Creado!`);
       console.log(res);
     },
     onError: (err) => {
@@ -25,45 +25,45 @@ const NewUser = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const clientInfo = {
-      personType: personType,
+    const userInfo = {
+      // personType: personType,
       dni: e?.target?.dni?.value?.trim(),
-      ruc: e?.target?.ruc?.value?.trim(),
+      // ruc: e?.target?.ruc?.value?.trim(),
       firstName: e?.target?.firstName?.value?.trim(),
       lastName: e?.target?.lastName?.value?.trim(),
       email: e?.target?.email?.value?.trim(),
       phoneNumber: e?.target?.phoneNumber?.value?.trim(),
       password: e?.target?.password?.value?.trim(),
       repeatPassword: e?.target?.repeatPassword?.value?.trim(),
-      nameReason: e?.target?.nameReason?.value?.trim(),
+      // nameReason: e?.target?.nameReason?.value?.trim(),
       birthday: e?.target?.birthday?.value?.trim(),
     };
-
+    
     // --> Form validation
     if (
       [
-        clientInfo?.dni,
-        clientInfo?.firstName,
-        clientInfo?.lastName,
-        clientInfo?.email,
-        clientInfo?.phoneNumber,
-        clientInfo?.password,
-        clientInfo?.birthday,
+        userInfo?.dni,
+        userInfo?.firstName,
+        userInfo?.lastName,
+        userInfo?.email,
+        userInfo?.phoneNumber,
+        userInfo?.password,
+        userInfo?.birthday,
       ].includes("")
     ) {
       return toast.error("¡Llena los espacios disponibles!");
-    } else if (clientInfo.password !== clientInfo.repeatPassword) {
+    } else if (userInfo.password !== userInfo.repeatPassword) {
       return toast.error("¡Contraseñas no coinciden!");
     }
 
     mutate({
-      dni: clientInfo?.dni,
-      nombres: clientInfo?.firstName,
-      apellidos: clientInfo?.lastName,
-      fechaNacimiento: clientInfo?.birthday,
-      email: clientInfo?.email,
-      numeroCelular: clientInfo?.phoneNumber,
-      password: clientInfo?.password,
+      dni: userInfo?.dni,
+      nombres: userInfo?.firstName,
+      apellidos: userInfo?.lastName,
+      fechaNacimiento: userInfo?.birthday,
+      email: userInfo?.email,
+      numeroCelular: userInfo?.phoneNumber,
+      password: userInfo?.password,
     });
   };
 
@@ -101,7 +101,7 @@ const NewUser = () => {
         </Typography>
 
         {/* Formulario */}
-        <Form isPending={isPending} />
+        <Form isPending={isPending} handleSubmit={handleSubmit} />
       </Container>
     </Box>
   );

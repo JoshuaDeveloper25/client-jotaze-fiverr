@@ -4,7 +4,7 @@ import { Link as RouterLink } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import logo from "../../../images/logo1.webp";
 
-const Form = ({ handleSubmit, isPending }) => {
+const Form = ({ handleSubmit, isPending, setOpen, open }) => {
   return (
     <>
       <Box
@@ -95,8 +95,8 @@ const Form = ({ handleSubmit, isPending }) => {
               <PeopleOutlineRoundedIcon /> Registrarse
             </Button>
             <Button
+              onClick={() => setOpen(!open)}
               component={RouterLink}
-              to={`/buscar-servicio`}
               variant="outlined"
               sx={{ marginBottom: ".8rem" }}
             >

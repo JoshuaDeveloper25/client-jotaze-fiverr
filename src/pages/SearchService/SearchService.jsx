@@ -1,22 +1,16 @@
 import { Box, Container, Typography, Link } from "@mui/material";
-import { Link as LinkRouter } from "react-router-dom";
+import { Link as LinkRouter, useLocation } from "react-router-dom";
 
 import SearchServiceTable from "./components/SearchServiceTable";
 import { useState } from "react";
 
-const track = [
-  {
-    numeroSolicitud: 2024.00006,
-    detalle: "Ver (0)",
-    adjunto: "Ver (0)",
-    usuario: "Issac Gómez Day",
-    area: "Contable",
-    observacion: "En trámite",
-  },
-];
+const track = [];
 
 const SearchService = () => {
   const [filtering, setFiltering] = useState("");
+  const location = useLocation();
+  track.push(location.state.info);
+  console.log(location?.state?.info?.estado);
 
   return (
     <Box component={"section"} sx={{ marginTop: "1rem" }}>
@@ -68,7 +62,9 @@ const SearchService = () => {
               >
                 Tipo:
               </Typography>
-              <Typography variant={"subtitle2"}>Contable</Typography>
+              <Typography variant={"subtitle2"}>
+                {location?.state?.info?.tipoServicio}
+              </Typography>
             </Box>
 
             <Box>
@@ -82,7 +78,12 @@ const SearchService = () => {
               >
                 Estado:
               </Typography>
-              <Typography variant={"subtitle2"}>Recibido</Typography>
+              <Typography
+                sx={{ textTransform: "capitalize" }}
+                variant={"subtitle2"}
+              >
+                {location?.state?.info?.estado}
+              </Typography>
             </Box>
           </Box>
 
@@ -108,7 +109,9 @@ const SearchService = () => {
               >
                 Servicio:
               </Typography>
-              <Typography variant={"subtitle2"}>REPORTE FICHA RUC</Typography>
+              <Typography variant={"subtitle2"}>
+                {location?.state?.info?.servicio}
+              </Typography>
             </Box>
 
             <Box>
@@ -122,7 +125,10 @@ const SearchService = () => {
               >
                 CLIENTE:
               </Typography>
-              <Typography variant={"subtitle2"}>Juan Peréz García</Typography>
+              <Typography
+                sx={{ textTransform: "capitalize" }}
+                variant={"subtitle2"}
+              >{`${location?.state?.info?.encargado?.nombres} ${location?.state?.info?.encargado?.apellidos}`}</Typography>
             </Box>
           </Box>
 
@@ -148,7 +154,7 @@ const SearchService = () => {
               >
                 DNI/RUC:
               </Typography>
-              <Typography variant={"subtitle2"}>45869593</Typography>
+              <Typography variant={"subtitle2"}>{location?.state?.info?.encargado?.dni}</Typography>
             </Box>
 
             <Box>
@@ -162,7 +168,7 @@ const SearchService = () => {
               >
                 Fecha y Hora:
               </Typography>
-              <Typography variant={"subtitle2"}>15-01-2024 15:36:42</Typography>
+              <Typography variant={"subtitle2"}>{location?.state?.info?.fechaHoraAccion}</Typography>
             </Box>
           </Box>
 
@@ -186,7 +192,7 @@ const SearchService = () => {
               >
                 Celular:
               </Typography>
-              <Typography variant={"subtitle2"}>913528963</Typography>
+              <Typography variant={"subtitle2"}>{location?.state?.info?.encargado?.numeroCelular}</Typography>
             </Box>
 
             <Box>
@@ -200,7 +206,7 @@ const SearchService = () => {
               >
                 CORREO:
               </Typography>
-              <Typography variant={"subtitle2"}>jperezg@gmail.com</Typography>
+              <Typography variant={"subtitle2"}>{location?.state?.info?.encargado?.email}</Typography>
             </Box>
           </Box>
         </Box>

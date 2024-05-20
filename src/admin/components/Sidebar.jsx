@@ -274,26 +274,28 @@ const Sidebar = () => {
               }}
               open={open3}
             >
-              <MenuItem
-                sx={{
-                  fontSize: ".8rem",
-                  color: `${
-                    location?.pathname === "/admin/registrar-servicio"
-                      ? "#188754"
-                      : "#000"
-                  }`,
-                  background: `${
-                    location?.pathname === "/admin/registrar-servicio"
-                      ? "rgba(211, 211, 211, .2)"
-                      : "transparent"
-                  }`,
-                }}
-                onClick={() => setAnchorEl3(null)}
-                to={`/admin/registrar-servicio`}
-                component={NavLink}
-              >
-                AÑADIR SERVICIO
-              </MenuItem>
+              {userInfo?.role === "client" ? (
+                <MenuItem
+                  sx={{
+                    fontSize: ".8rem",
+                    color: `${
+                      location?.pathname === "/admin/registrar-servicio"
+                        ? "#188754"
+                        : "#000"
+                    }`,
+                    background: `${
+                      location?.pathname === "/admin/registrar-servicio"
+                        ? "rgba(211, 211, 211, .2)"
+                        : "transparent"
+                    }`,
+                  }}
+                  onClick={() => setAnchorEl3(null)}
+                  to={`/admin/registrar-servicio`}
+                  component={NavLink}
+                >
+                  AÑADIR SERVICIO
+                </MenuItem>
+              ) : null}
 
               {userInfo?.role === "client" ? null : (
                 <MenuItem
@@ -331,6 +333,29 @@ const Sidebar = () => {
                     }`,
                     background: `${
                       location?.pathname === "/admin/lista-servicios"
+                        ? "rgba(211, 211, 211, .2)"
+                        : "transparent"
+                    }`,
+                  }}
+                  onClick={() => setAnchorEl3(null)}
+                >
+                  LISTA DE SERVICIOS
+                </MenuItem>
+              ) : null}
+
+              {userInfo?.role === "client" ? (
+                <MenuItem
+                  to={`/admin/lista-servicios-cliente`}
+                  component={NavLink}
+                  sx={{
+                    fontSize: ".8rem",
+                    color: `${
+                      location?.pathname === "/admin/lista-servicios-cliente"
+                        ? "#188754"
+                        : "#000"
+                    }`,
+                    background: `${
+                      location?.pathname === "/admin/lista-servicios-cliente"
                         ? "rgba(211, 211, 211, .2)"
                         : "transparent"
                     }`,

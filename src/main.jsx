@@ -24,6 +24,7 @@ import ServicesList from "./admin/pages/ServicesList/ServicesList";
 import SearchService from "./pages/SearchService/SearchService";
 import ConfirmAccount from "./pages/ConfirmAccount/ConfirmAccount";
 import RegisterService from "./admin/pages/RegisterService/RegisterService";
+import ServicesListClient from "./admin/pages/ServicesListClient/ServicesListClient";
 
 import PrivateRoutes from "./auth/PrivateRoutes";
 import PublicRoutes from "./auth/PublicRoutes";
@@ -89,6 +90,11 @@ const router = createBrowserRouter([
           {
             path: "/admin/lista-servicios",
             element: <ServicesList />,
+          },
+
+          {
+            path: "/admin/lista-servicios-cliente",
+            element: <ServicesListClient />,
           },
 
           {
