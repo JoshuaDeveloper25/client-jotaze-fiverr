@@ -63,6 +63,9 @@ function filterObjects(array, filterObject) {
 }
 
 const ServicesListClient = () => {
+  const [filterDateColumn, setFilterDateColumn] = useState([]);
+  const [filtering, setFiltering] = useState("");
+
   const { data, isPending, error, isFetched } = useQuery({
     queryKey: ["allServicesClient"],
     queryFn: async () =>
@@ -70,9 +73,6 @@ const ServicesListClient = () => {
         `${import.meta.env.VITE_BASE_URL}/services/get-all-services-by-client`
       ),
   });
-
-  const [filterDateColumn, setFilterDateColumn] = useState([]);
-  const [filtering, setFiltering] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();

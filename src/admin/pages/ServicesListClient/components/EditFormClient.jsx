@@ -25,7 +25,9 @@ const EditFormClient = ({
   isPending,
   open,
   setOpen,
+  infoRow,
 }) => {
+  console.log(classService);
   return (
     <Box
       component={"form"}
@@ -38,7 +40,7 @@ const EditFormClient = ({
         margin: "auto",
       }}
     >
-      <FormControl variant="filled" fullWidth>
+      <FormControl  variant="filled" fullWidth>
         <InputLabel id="demo-simple-select-label">CLASE DE SERVICIO</InputLabel>
         <Select
           size="small"
@@ -48,7 +50,6 @@ const EditFormClient = ({
           value={classService}
           onChange={(e) => setClassService(e.target.value)}
           name="tipoServicio"
-          defaultValue={""}
         >
           <MenuItem value={"Contable"}>Contable</MenuItem>
           <MenuItem value={"Juridico"}>Jurídico</MenuItem>
@@ -70,7 +71,6 @@ const EditFormClient = ({
             disabled={!classService}
             value={service}
             onChange={(e) => setService(e.target.value)}
-            defaultValue={""}
           >
             <MenuItem value={"contable1"}>
               Cambio de Regimén Tributario
@@ -89,7 +89,6 @@ const EditFormClient = ({
             disabled={!classService}
             value={service}
             onChange={(e) => setService(e.target.value)}
-            defaultValue={""}
           >
             <MenuItem value={"juridico1"}>
               Elaboración Minuta Compra-Venta
@@ -108,7 +107,7 @@ const EditFormClient = ({
             disabled={!classService}
             value={service}
             onChange={(e) => setService(e.target.value)}
-            defaultValue={""}
+            
           >
             <MenuItem value={"transporte1"}>
               Obtención Permiso Transporte Turism
@@ -127,7 +126,7 @@ const EditFormClient = ({
             disabled={!classService}
             value={service}
             onChange={(e) => setService(e.target.value)}
-            defaultValue={""}
+            
           >
             <MenuItem value={"contable1"}>
               Cambio de Regimén Tributario
@@ -149,6 +148,7 @@ const EditFormClient = ({
             multiline={true}
             rows={3}
             name="detalle"
+            defaultValue={infoRow?.detalle}
           />
         </Box>
       </Box>

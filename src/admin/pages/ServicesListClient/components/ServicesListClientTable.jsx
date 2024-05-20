@@ -5,20 +5,19 @@ import { Table } from "../../../../components/Table";
 import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import TroubleshootIcon from "@mui/icons-material/Troubleshoot";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
+import AppContext from "../../../../context/AppProvider";
 import NumbersIcon from "@mui/icons-material/Numbers";
 import InfoIcon from "@mui/icons-material/Info";
 import EditFormClient from "./EditFormClient";
-import { useContext, useState } from "react";
-import AppContext from "../../../../context/AppProvider";
-import { useMutation } from "@tanstack/react-query";
+import { useContext, useEffect, useState } from "react";
 
 const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
-  console.log(services)
   return (
     <Table
       data={services}
@@ -219,7 +218,7 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
               </Box>
             );
           },
-          cell: (info) => <ModalEdit info={info} />,
+          cell: (info) => <ModalComponentEdit info={info.cell.row.original} />,
         },
       ]}
     />
@@ -227,6 +226,81 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
 };
 
 export default ServicesListTable;
+
+// Editar Servicio Modal
+const ModalComponentEdit = ({ info }) => {
+  const [classService, setClassService] = useState("");
+  const [service, setService] = useState("");
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const value = info;
+
+  const [infoRow, setInfoRow] = useState(null);
+  const queryClient = useQueryClient();
+
+  const editServiceMutation = useMutation({
+    mutationFn: async (data) =>
+      await axios
+        .put(`/news/edit-new/${infoRow._id}`, data)
+        .then((res) => res.data),
+    onSuccess: () => {
+      setInfoRow(null);
+      setTextInfo([]);
+      toast.success(`New Edited Successfully!`);
+      queryClient.invalidateQueries(["news"]);
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
+  useEffect(() => {
+    setService(info?.servicio);
+    setClassService(info?.tipoServicio);
+
+    setInfoRow(value);
+    console.log(info)
+  }, []);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => setOpen(false);
+
+  return (
+    <>
+      {value?.estado === "atendido" || value?.estado === "rechazado" ? null : (
+        <>
+          <Button
+            onClick={handleOpen}
+            variant="contained"
+            size="small"
+            color="warning"
+          >
+            Editar
+          </Button>
+        </>
+      )}
+
+      <ModalComponent
+        modalTitle={"Editar Servicio:"}
+        handleClose={handleClose}
+        modalWidth={500}
+        open={open}
+      >
+        {/* Formulario */}
+        <EditFormClient
+          onClose={() => setInfoRow([])}
+          infoRow={infoRow}
+          setService={setService}
+          service={service}
+          setClassService={setClassService}
+          classService={classService}
+        />
+      </ModalComponent>
+    </>
+  );
+};
 
 // Detalle Modal
 const CellCustom = ({ info }) => {
@@ -254,94 +328,6 @@ const CellCustom = ({ info }) => {
         handleClose={handleClose}
         open={open}
       />
-    </>
-  );
-};
-
-// Editar Modal
-const ModalEdit = ({ info }) => {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
-  const value = info.cell.row.original;
-
-  const { userInfo } = useContext(AppContext);
-  const [classService, setClassService] = useState("");
-  const [service, setService] = useState("");
-  const navigate = useNavigate();
-
-  const { mutate, isPending, error } = useMutation({
-    mutationFn: async (serviceInfo) =>
-      await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/services/register-service-client`,
-        serviceInfo
-      ),
-    onSuccess: (res) => {
-      toast.success(`¡Nuevo Servicio Creado!`);
-      console.log(res);
-
-      if (userInfo?.role === "admin") {
-        navigate("/admin/lista-servicios");
-      } else {
-        navigate("/admin/lista-servicios-cliente");
-      }
-    },
-    onError: (err) => {
-      toast.error(getError(err));
-      console.log(err);
-    },
-  });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if ([service, classService, e?.target?.detalle?.value].includes("")) {
-      return toast.error("¡Llena los campos disponibles!");
-    } else if (e?.target?.uploadImages?.value === "") {
-      return toast.error("¡Subir un archivo es necesario!");
-    }
-
-    const formData = new FormData(e.target);
-    formData.append("fechaHoraAccion", formatoFecha(new Date()));
-    formData.append("numeroServicio", getRandomNumberUnique(10));
-    formData.append("codigo", getRandomNumberUnique(4));
-
-    mutate(formData);
-  };
-
-  return (
-    <>
-      {value?.estado === "atendido" || value?.estado === "rechazado" ? null : (
-        <>
-          <Button
-            onClick={handleOpen}
-            variant="contained"
-            size="small"
-            color="warning"
-          >
-            Editar
-          </Button>
-        </>
-      )}
-
-      <ModalComponent
-        modalTitle={"Editar Servicio:"}
-        handleClose={handleClose}
-        open={open}
-      >
-        {/* Formulario */}
-        <EditFormClient
-          isPending={isPending}
-          handleSubmit={handleSubmit}
-          setService={setService}
-          service={service}
-          setClassService={setClassService}
-          classService={classService}
-          open={open}
-          setOpen={setOpen}
-        />
-      </ModalComponent>
     </>
   );
 };
