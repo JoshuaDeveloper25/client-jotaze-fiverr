@@ -41,11 +41,7 @@ const ClientXService = () => {
         serviceInfo
       ),
     onSuccess: (res) => {
-      if (userInfo?.role === "admin") {
-        queryClient.invalidateQueries(["allServices"]);
-      } else {
-        queryClient.invalidateQueries(["allServicesClient"]);
-      }
+      queryClient.invalidateQueries(["allServices"]);
 
       toast.success(`¡Exitosamente solicitado!`);
       navigate("/admin/lista-servicios");

@@ -64,7 +64,7 @@ function filterObjects(array, filterObject) {
 
 const ServicesListClient = () => {
   const { data, isPending, error, isFetched } = useQuery({
-    queryKey: ["allServicesClient"],
+    queryKey: ["allServices"],
     queryFn: async () =>
       await axios.get(
         `${import.meta.env.VITE_BASE_URL}/services/get-all-services-by-client`
@@ -100,6 +100,8 @@ const ServicesListClient = () => {
     const objetosFiltrados = filterObjects(data?.data, filterTableInfo);
     setFilterDateColumn(objetosFiltrados);
   };
+
+  console.log(error)
 
   return (
     <Box component="section">
