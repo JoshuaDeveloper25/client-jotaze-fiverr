@@ -29,8 +29,6 @@ const Form = ({
       component={"form"}
       onSubmit={handleSubmit}
       sx={{
-        display: "flex",
-        flexDirection: "column",
         gap: "1.5rem",
         maxWidth: "30rem",
         margin: "auto",
