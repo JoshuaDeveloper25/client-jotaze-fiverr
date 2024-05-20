@@ -7,11 +7,11 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: 450,
   bgcolor: "background.paper",
   boxShadow: 24,
   padding: "1rem",
-  minHeight: "10rem",
+  minHeight: "15rem",
   maxHeight: "20rem",
   overflow: "auto",
 };

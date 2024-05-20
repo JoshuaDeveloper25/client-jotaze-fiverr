@@ -93,7 +93,7 @@ const Sidebar = () => {
             gap: "1rem",
           }}
         >
-          {userInfo?.role === "admin" ? (
+          {userInfo?.role === "user" || userInfo?.role === "admin" ? (
             <>
               {/* Inicio */}
               <div>
@@ -122,7 +122,11 @@ const Sidebar = () => {
                   <HouseOutlinedIcon /> Inicio
                 </Button>
               </div>
+            </>
+          ) : null}
 
+          {userInfo?.role === "admin" ? (
+            <>
               {/* Usuarios */}
               <div>
                 <Button

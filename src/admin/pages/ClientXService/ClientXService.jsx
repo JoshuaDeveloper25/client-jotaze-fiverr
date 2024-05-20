@@ -1,5 +1,5 @@
 import { getRandomNumberUnique } from "../../../utils/getRandomNumberUnique";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { formatoFecha } from "../../../utils/dateUtilities";
 import { Box, Container, Typography } from "@mui/material";
 import AppContext from "../../../context/AppProvider";
@@ -27,11 +27,9 @@ const ClientXService = () => {
     },
     onError: (err) => {
       toast.error(getError(err));
-      console.log(err);
     },
   });
 
-  console.log(searchClientMutation?.data?.data?._id);
   const { mutate, isPending } = useMutation({
     mutationFn: async (serviceInfo) =>
       await axios.post(
@@ -63,6 +61,8 @@ const ClientXService = () => {
 
     if ([service, classService, e?.target?.detalle?.value].includes("")) {
       return toast.error("¡Llena los campos disponibles!");
+    } else if (!searchClientMutation?.data?.data) {
+      return;
     }
     // else if (e?.target?.uploadImages?.value === '') {
     //   return toast.error('¡Subir un archivo es necesario!')
@@ -75,8 +75,6 @@ const ClientXService = () => {
 
     mutate(formData);
   };
-
-  console.log(searchClientMutation?.data?.data);
 
   const handleSearchClient = (e) => {
     e.preventDefault();

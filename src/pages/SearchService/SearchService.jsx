@@ -9,8 +9,7 @@ const track = [];
 const SearchService = () => {
   const [filtering, setFiltering] = useState("");
   const location = useLocation();
-  track.push(location.state.info);
-  console.log(location?.state?.info?.estado);
+  track.push(location?.state?.info);
 
   return (
     <Box component={"section"} sx={{ marginTop: "1rem" }}>

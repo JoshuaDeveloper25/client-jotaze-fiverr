@@ -5,15 +5,17 @@ import { Table } from "../../../../components/Table";
 import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import AccessibilityIcon from "@mui/icons-material/Accessibility";
 import TroubleshootIcon from "@mui/icons-material/Troubleshoot";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import NumbersIcon from "@mui/icons-material/Numbers";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import InfoIcon from "@mui/icons-material/Info";
-import { useState } from "react";
+import EditFormClient from "./EditFormClient";
+import { useContext, useState } from "react";
+import AppContext from "../../../../context/AppProvider";
+import { useMutation } from "@tanstack/react-query";
 
 const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
   return (
@@ -87,41 +89,6 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
 
         {
           id: "col4",
-          accessorKey: "",
-          header: () => {
-            return (
-              <Box sx={{ display: "flex", alignItems: "center", gap: ".2rem" }}>
-                <AccessibilityIcon />
-
-                <Typography
-                  variant="subtitle1"
-                  sx={{
-                    fontWeight: "bold",
-                    textTransform: "uppercase",
-                    fontSize: ".9rem",
-                  }}
-                >
-                  Cliente
-                </Typography>
-              </Box>
-            );
-          },
-          cell: (info) => {
-            const value = info.cell.row.original;
-
-            return (
-              <>
-                <p>
-                  {value?.clienteInfo?.nombres ||
-                    value?.clienteInfo?.nombreRazonSocial}
-                </p>
-              </>
-            );
-          },
-        },
-
-        {
-          id: "col5",
           accessorKey: "detalle",
           header: () => (
             <Box sx={{ display: "flex", alignItems: "center", gap: ".2rem" }}>
@@ -143,7 +110,7 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
         },
 
         {
-          id: "col6",
+          id: "col5",
           accessorKey: "",
           header: () => (
             <Box sx={{ display: "flex", alignItems: "center", gap: ".2rem" }}>
@@ -190,7 +157,7 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
         },
 
         {
-          id: "col7",
+          id: "col6",
           accessorKey: "fechaHoraAccion",
           header: () => (
             <Box sx={{ display: "flex", alignItems: "center", gap: ".2rem" }}>
@@ -211,7 +178,7 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
         },
 
         {
-          id: "col8",
+          id: "col7",
           accessorKey: "estado",
           header: () => (
             <Box sx={{ display: "flex", alignItems: "center", gap: ".2rem" }}>
@@ -232,35 +199,7 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
         },
 
         {
-          id: "col9",
-          cell: (info) => {
-            const value = info?.cell?.row?.original;
-
-            return (
-              <>
-                {value?.estado === "pendiente" ? (
-                  <>
-                    <Button variant="contained" size="small" color="warning">
-                      Recibir
-                    </Button>
-
-                    <Button
-                      variant="contained"
-                      size="small"
-                      color="info"
-                      sx={{ margin: "0 .4rem" }}
-                    >
-                      Derivar
-                    </Button>
-
-                    <Button variant="contained" size="small" color="error">
-                      Rechazar
-                    </Button>
-                  </>
-                ) : null}
-              </>
-            );
-          },
+          id: "col8",
           header: () => {
             return (
               <Box sx={{ display: "flex", alignItems: "center", gap: ".2rem" }}>
@@ -279,27 +218,7 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
               </Box>
             );
           },
-        },
-
-        {
-          id: "col10",
-          accessorKey: "observacion",
-          header: () => (
-            <Box sx={{ display: "flex", alignItems: "center", gap: ".2rem" }}>
-              <VisibilityIcon />
-
-              <Typography
-                variant="subtitle1"
-                sx={{
-                  fontWeight: "bold",
-                  textTransform: "uppercase",
-                  fontSize: ".9rem",
-                }} 
-              >
-                Obvervación
-              </Typography>
-            </Box>
-          ),
+          cell: (info) => <ModalEdit info={info} />,
         },
       ]}
     />
@@ -308,6 +227,7 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
 
 export default ServicesListTable;
 
+// Detalle Modal
 const CellCustom = ({ info }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -333,6 +253,94 @@ const CellCustom = ({ info }) => {
         handleClose={handleClose}
         open={open}
       />
+    </>
+  );
+};
+
+// Editar Modal
+const ModalEdit = ({ info }) => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const value = info.cell.row.original;
+
+  const { userInfo } = useContext(AppContext);
+  const [classService, setClassService] = useState("");
+  const [service, setService] = useState("");
+  const navigate = useNavigate();
+
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: async (serviceInfo) =>
+      await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/services/register-service-client`,
+        serviceInfo
+      ),
+    onSuccess: (res) => {
+      toast.success(`¡Nuevo Servicio Creado!`);
+      console.log(res);
+
+      if (userInfo?.role === "admin") {
+        navigate("/admin/lista-servicios");
+      } else {
+        navigate("/admin/lista-servicios-cliente");
+      }
+    },
+    onError: (err) => {
+      toast.error(getError(err));
+      console.log(err);
+    },
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if ([service, classService, e?.target?.detalle?.value].includes("")) {
+      return toast.error("¡Llena los campos disponibles!");
+    } else if (e?.target?.uploadImages?.value === "") {
+      return toast.error("¡Subir un archivo es necesario!");
+    }
+
+    const formData = new FormData(e.target);
+    formData.append("fechaHoraAccion", formatoFecha(new Date()));
+    formData.append("numeroServicio", getRandomNumberUnique(10));
+    formData.append("codigo", getRandomNumberUnique(4));
+
+    mutate(formData);
+  };
+
+  return (
+    <>
+      {value?.estado === "atendido" || value?.estado === "rechazado" ? null : (
+        <>
+          <Button
+            onClick={handleOpen}
+            variant="contained"
+            size="small"
+            color="warning"
+          >
+            Editar
+          </Button>
+        </>
+      )}
+
+      <ModalComponent
+        modalTitle={"Editar Servicio:"}
+        handleClose={handleClose}
+        open={open}
+      >
+        {/* Formulario */}
+        <EditFormClient
+          isPending={isPending}
+          handleSubmit={handleSubmit}
+          setService={setService}
+          service={service}
+          setClassService={setClassService}
+          classService={classService}
+          open={open}
+          setOpen={setOpen}
+        />
+      </ModalComponent>
     </>
   );
 };

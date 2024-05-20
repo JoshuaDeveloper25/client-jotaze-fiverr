@@ -34,8 +34,11 @@ const LogIn = () => {
         "Authorization"
       ] = `Bearer ${res?.data?.token}`;
 
-      if (res.data.role === "client" || res?.data?.role === "user")
+      if (res.data.role === "client") {
         navigate("/admin/registrar-servicio");
+      } else if (res?.data?.role === "user") {
+        navigate("/admin/");
+      }
     },
     onError: (err) => {
       toast.error(getError(err));
@@ -68,7 +71,6 @@ const LogIn = () => {
     onSuccess: (data) => {
       toast.success("¡Cliente encontrado!");
       navigate(`/buscar-servicio`, { state: { info: data?.data } });
-      console.log(data);
     },
     onError: (err) => {
       toast.error(getError(err));

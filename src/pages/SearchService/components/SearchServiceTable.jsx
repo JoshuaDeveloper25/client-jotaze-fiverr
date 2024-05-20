@@ -2,10 +2,10 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import NumbersIcon from "@mui/icons-material/Numbers";
+import { Link as RouterLink } from "react-router-dom";
 import { Table } from "../../../components/Table";
 import RoomIcon from "@mui/icons-material/Room";
 import InfoIcon from "@mui/icons-material/Info";
-import { Link as RouterLink } from "react-router-dom";
 
 import { Box, Button, Typography } from "@mui/material";
 
@@ -114,7 +114,6 @@ const SearchServiceTable = ({ track = [], setFiltering, filtering }) => {
           ),
           cell: (info) => {
             const value = info.cell.row.original;
-            // console.log(value?.encargado?.nombres)
 
             return (
               <>
