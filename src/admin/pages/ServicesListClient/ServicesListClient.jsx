@@ -64,7 +64,7 @@ function filterObjects(array, filterObject) {
 
 const ServicesListClient = () => {
   const { data, isPending, error, isFetched } = useQuery({
-    queryKey: ["allServices"],
+    queryKey: ["allServicesClient"],
     queryFn: async () =>
       await axios.get(
         `${import.meta.env.VITE_BASE_URL}/services/get-all-services-by-client`
@@ -101,6 +101,7 @@ const ServicesListClient = () => {
     setFilterDateColumn(objetosFiltrados);
   };
 
+  console.log(data)
   console.log(error)
 
   return (
