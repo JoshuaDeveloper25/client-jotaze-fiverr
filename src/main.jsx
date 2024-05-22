@@ -1,16 +1,16 @@
 // --> Default React imports
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import ReactDOM from 'react-dom/client';
 
 // --> Styles imports
-import CssBaseline from "@mui/material/CssBaseline";
-import "react-toastify/dist/ReactToastify.css";
-import "./index.css";
+import CssBaseline from '@mui/material/CssBaseline';
+import 'react-toastify/dist/ReactToastify.css';
+import './index.css';
 
 // --> React Outer imports
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { AppProvider } from "./context/AppProvider";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { AppProvider } from './context/AppProvider';
 
 // --> Pages
 import Root from "./pages/Root";
@@ -28,8 +28,9 @@ import ServicesListClient from "./admin/pages/ServicesListClient/ServicesListCli
 import UsersList from "./admin/pages/UsersList/UsersList";
 import ClientList from "./admin/pages/ClientList/ClientList";
 
-import PrivateRoutes from "./auth/PrivateRoutes";
-import PublicRoutes from "./auth/PublicRoutes";
+import PrivateRoutes from './auth/PrivateRoutes';
+import PublicRoutes from './auth/PublicRoutes';
+import ReferUser from './pages/ReferUser/ReferUser';
 
 const router = createBrowserRouter([
   {
@@ -45,17 +46,17 @@ const router = createBrowserRouter([
 
           {
             element: <SearchService />,
-            path: "/buscar-servicio",
+            path: '/buscar-servicio',
           },
 
           {
             element: <NewClient />,
-            path: "/nuevo-cliente",
+            path: '/nuevo-cliente',
           },
 
           {
             element: <ConfirmAccount />,
-            path: "/confirmaccount/:token",
+            path: '/confirmaccount/:token',
           },
         ],
       },
@@ -66,7 +67,7 @@ const router = createBrowserRouter([
     element: <PrivateRoutes />,
     children: [
       {
-        path: "/admin",
+        path: '/admin',
         element: <AdminRoot />,
         children: [
           {
@@ -75,7 +76,13 @@ const router = createBrowserRouter([
           },
 
           {
-            path: "/admin/nuevo-usuario",
+            path: "/admin/derivar-usuario/:id",
+            element: <ReferUser />,
+          },
+
+
+          {
+            path: '/admin/nuevo-usuario',
             element: <NewUser />,
           },
 
@@ -86,6 +93,11 @@ const router = createBrowserRouter([
 
           {
             path: "/admin/nuevo-cliente",
+            element: <NewUser />,
+          },
+
+          {
+            path: '/admin/nuevo-cliente',
             element: <NewClient />,
           },
 
@@ -100,17 +112,17 @@ const router = createBrowserRouter([
           },
 
           {
-            path: "/admin/lista-servicios",
+            path: '/admin/lista-servicios',
             element: <ServicesList />,
           },
 
           {
-            path: "/admin/lista-servicios-cliente",
+            path: '/admin/lista-servicios-cliente',
             element: <ServicesListClient />,
           },
 
           {
-            path: "/admin/registrar-servicio",
+            path: '/admin/registrar-servicio',
             element: <RegisterService />,
           },
         ],
@@ -121,7 +133,7 @@ const router = createBrowserRouter([
 
 const queryClient = new QueryClient();
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById('root')).render(
   <>
     <QueryClientProvider client={queryClient}>
       <AppProvider>

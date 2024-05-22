@@ -1,19 +1,19 @@
-import ModalComponent from "../../../components/ModalComponent";
-import { Box, Button, Typography } from "@mui/material";
-import { Table } from "../../../../components/Table";
+import ModalComponent from '../../../components/ModalComponent';
+import { Box, Button, Typography } from '@mui/material';
+import { Table } from '../../../../components/Table';
 
-import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
-import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import AccessibilityIcon from "@mui/icons-material/Accessibility";
-import TroubleshootIcon from "@mui/icons-material/Troubleshoot";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import AttachFileIcon from "@mui/icons-material/AttachFile";
-import NumbersIcon from "@mui/icons-material/Numbers";
-import { Link as RouterLink } from "react-router-dom";
-import InfoIcon from "@mui/icons-material/Info";
-import { useState } from "react";
+import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import AccessibilityIcon from '@mui/icons-material/Accessibility';
+import TroubleshootIcon from '@mui/icons-material/Troubleshoot';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+import NumbersIcon from '@mui/icons-material/Numbers';
+import { Link, Link as RouterLink } from 'react-router-dom';
+import InfoIcon from '@mui/icons-material/Info';
+import { useState } from 'react';
 
 const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
   return (
@@ -23,18 +23,18 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
       filtering={filtering}
       columns={[
         {
-          id: "col1",
-          accessorKey: "numeroServicio",
+          id: 'col1',
+          accessorKey: 'numeroServicio',
           header: () => (
-            <Box sx={{ display: "flex", alignItems: "center", gap: ".2rem" }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: '.2rem' }}>
               <NumbersIcon />
 
               <Typography
                 variant="subtitle1"
                 sx={{
-                  fontWeight: "bold",
-                  textTransform: "uppercase",
-                  fontSize: ".9rem",
+                  fontWeight: 'bold',
+                  textTransform: 'uppercase',
+                  fontSize: '.9rem',
                 }}
               >
                 Número de Servicio
@@ -44,18 +44,18 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
         },
 
         {
-          id: "col2",
-          accessorKey: "codigo",
+          id: 'col2',
+          accessorKey: 'codigo',
           header: () => (
-            <Box sx={{ display: "flex", alignItems: "center", gap: ".2rem" }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: '.2rem' }}>
               <FormatListNumberedIcon />
 
               <Typography
                 variant="subtitle1"
                 sx={{
-                  fontWeight: "bold",
-                  textTransform: "uppercase",
-                  fontSize: ".9rem",
+                  fontWeight: 'bold',
+                  textTransform: 'uppercase',
+                  fontSize: '.9rem',
                 }}
               >
                 Código
@@ -65,18 +65,18 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
         },
 
         {
-          id: "col3",
-          accessorKey: "tipoServicio",
+          id: 'col3',
+          accessorKey: 'tipoServicio',
           header: () => (
-            <Box sx={{ display: "flex", alignItems: "center", gap: ".2rem" }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: '.2rem' }}>
               <AppRegistrationIcon />
 
               <Typography
                 variant="subtitle1"
                 sx={{
-                  fontWeight: "bold",
-                  textTransform: "uppercase",
-                  fontSize: ".9rem",
+                  fontWeight: 'bold',
+                  textTransform: 'uppercase',
+                  fontSize: '.9rem',
                 }}
               >
                 Tipo Servicio
@@ -86,19 +86,19 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
         },
 
         {
-          id: "col4",
-          accessorKey: "",
+          id: 'col4',
+          accessorKey: '',
           header: () => {
             return (
-              <Box sx={{ display: "flex", alignItems: "center", gap: ".2rem" }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: '.2rem' }}>
                 <AccessibilityIcon />
 
                 <Typography
                   variant="subtitle1"
                   sx={{
-                    fontWeight: "bold",
-                    textTransform: "uppercase",
-                    fontSize: ".9rem",
+                    fontWeight: 'bold',
+                    textTransform: 'uppercase',
+                    fontSize: '.9rem',
                   }}
                 >
                   Cliente
@@ -108,6 +108,7 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
           },
           cell: (info) => {
             const value = info.cell.row.original;
+            console.log(value)
 
             return (
               <>
@@ -121,18 +122,18 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
         },
 
         {
-          id: "col5",
-          accessorKey: "detalle",
+          id: 'col5',
+          accessorKey: 'detalle',
           header: () => (
-            <Box sx={{ display: "flex", alignItems: "center", gap: ".2rem" }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: '.2rem' }}>
               <InfoIcon />
 
               <Typography
                 variant="subtitle1"
                 sx={{
-                  fontWeight: "bold",
-                  textTransform: "uppercase",
-                  fontSize: ".9rem",
+                  fontWeight: 'bold',
+                  textTransform: 'uppercase',
+                  fontSize: '.9rem',
                 }}
               >
                 Detalle
@@ -143,18 +144,18 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
         },
 
         {
-          id: "col6",
-          accessorKey: "",
+          id: 'col6',
+          accessorKey: '',
           header: () => (
-            <Box sx={{ display: "flex", alignItems: "center", gap: ".2rem" }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: '.2rem' }}>
               <AttachFileIcon />
 
               <Typography
                 variant="subtitle1"
                 sx={{
-                  fontWeight: "bold",
-                  textTransform: "uppercase",
-                  fontSize: ".9rem",
+                  fontWeight: 'bold',
+                  textTransform: 'uppercase',
+                  fontSize: '.9rem',
                 }}
               >
                 Adjunto
@@ -163,11 +164,11 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
           ),
           cell: (info) => {
             const value = info?.cell?.row?.original;
-            return value?.adjunto?.[0]?.cloudinary_url.includes(".docx") ? (
+            return value?.adjunto?.[0]?.cloudinary_url.includes('.docx') ? (
               <>
                 <Button
                   component={RouterLink}
-                  sx={{ textDecoration: "transparent", color: "black" }}
+                  sx={{ textDecoration: 'transparent', color: 'black' }}
                   to={value?.adjunto?.[0]?.cloudinary_url}
                   target="_blank"
                 >
@@ -178,7 +179,7 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
               <>
                 <Button
                   component={RouterLink}
-                  sx={{ textDecoration: "transparent", color: "black" }}
+                  sx={{ textDecoration: 'transparent', color: 'black' }}
                   to={value?.adjunto?.[0]?.cloudinary_url}
                   target="_blank"
                 >
@@ -190,18 +191,18 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
         },
 
         {
-          id: "col7",
-          accessorKey: "fechaHoraAccion",
+          id: 'col7',
+          accessorKey: 'fechaHoraAccion',
           header: () => (
-            <Box sx={{ display: "flex", alignItems: "center", gap: ".2rem" }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: '.2rem' }}>
               <AccessTimeIcon />
 
               <Typography
                 variant="subtitle1"
                 sx={{
-                  fontWeight: "bold",
-                  textTransform: "uppercase",
-                  fontSize: ".9rem",
+                  fontWeight: 'bold',
+                  textTransform: 'uppercase',
+                  fontSize: '.9rem',
                 }}
               >
                 Fecha-Hora
@@ -211,18 +212,18 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
         },
 
         {
-          id: "col8",
-          accessorKey: "estado",
+          id: 'col8',
+          accessorKey: 'estado',
           header: () => (
-            <Box sx={{ display: "flex", alignItems: "center", gap: ".2rem" }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: '.2rem' }}>
               <TroubleshootIcon />
 
               <Typography
                 variant="subtitle1"
                 sx={{
-                  fontWeight: "bold",
-                  textTransform: "uppercase",
-                  fontSize: ".9rem",
+                  fontWeight: 'bold',
+                  textTransform: 'uppercase',
+                  fontSize: '.9rem',
                 }}
               >
                 Estado
@@ -232,13 +233,13 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
         },
 
         {
-          id: "col9",
+          id: 'col9',
           cell: (info) => {
             const value = info?.cell?.row?.original;
 
             return (
               <>
-                {value?.estado === "pendiente" ? (
+                {value?.estado === 'pendiente' ? (
                   <>
                     <Button variant="contained" size="small" color="warning">
                       Recibir
@@ -248,7 +249,9 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
                       variant="contained"
                       size="small"
                       color="info"
-                      sx={{ margin: "0 .4rem" }}
+                      sx={{ margin: '0 .4rem' }}
+                      LinkComponent={Link}
+                      to={`/admin/derivar-usuario/${value?._id}?tipoServicio=${value?.tipoServicio}&servicio=${value?.servicio}`}
                     >
                       Derivar
                     </Button>
@@ -263,15 +266,15 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
           },
           header: () => {
             return (
-              <Box sx={{ display: "flex", alignItems: "center", gap: ".2rem" }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: '.2rem' }}>
                 <ManageAccountsIcon />
 
                 <Typography
                   variant="subtitle1"
                   sx={{
-                    fontWeight: "bold",
-                    textTransform: "uppercase",
-                    fontSize: ".9rem",
+                    fontWeight: 'bold',
+                    textTransform: 'uppercase',
+                    fontSize: '.9rem',
                   }}
                 >
                   Acciones
@@ -282,18 +285,18 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
         },
 
         {
-          id: "col10",
-          accessorKey: "observacion",
+          id: 'col10',
+          accessorKey: 'observacion',
           header: () => (
-            <Box sx={{ display: "flex", alignItems: "center", gap: ".2rem" }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: '.2rem' }}>
               <VisibilityIcon />
 
               <Typography
                 variant="subtitle1"
                 sx={{
-                  fontWeight: "bold",
-                  textTransform: "uppercase",
-                  fontSize: ".9rem",
+                  fontWeight: 'bold',
+                  textTransform: 'uppercase',
+                  fontSize: '.9rem',
                 }}
               >
                 Obvervación
@@ -323,16 +326,17 @@ const CellCustom = ({ info }) => {
         size="small"
         color="success"
       >
-        <VisibilityIcon sx={{ marginRight: ".4rem" }} />
+        <VisibilityIcon sx={{ marginRight: '.4rem' }} />
         Ver
       </Button>
 
       <ModalComponent
-        modalWidth={500}
-        modalTitle={"Detalle:"}
+        modalTitle={'Detalle:'}
         modalText={value?.detalle}
         handleClose={handleClose}
         open={open}
+        modalMinHeight={200}
+        modalWidth={500}
       />
     </>
   );
