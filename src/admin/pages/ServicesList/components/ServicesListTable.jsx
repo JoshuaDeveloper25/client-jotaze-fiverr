@@ -294,7 +294,7 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
                   fontWeight: "bold",
                   textTransform: "uppercase",
                   fontSize: ".9rem",
-                }} 
+                }}
               >
                 Obvervación
               </Typography>
@@ -328,6 +328,7 @@ const CellCustom = ({ info }) => {
       </Button>
 
       <ModalComponent
+        modalWidth={500}
         modalTitle={"Detalle:"}
         modalText={value?.detalle}
         handleClose={handleClose}

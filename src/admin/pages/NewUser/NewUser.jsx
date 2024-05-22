@@ -1,11 +1,14 @@
 import { Box, Container, Typography } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { getError } from "../../../utils/getError";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Form from "./components/Form";
 import axios from "axios";
 
 const NewUser = () => {
+  const navigate = useNavigate();
+
   const { mutate, isPending } = useMutation({
     mutationFn: async (userInfo) =>
       await axios.post(
@@ -14,6 +17,7 @@ const NewUser = () => {
       ),
     onSuccess: (res) => {
       toast.success(`¡Nuevo Usuario Creado!`);
+      navigate("/admin/lista-usuarios");
       console.log(res);
     },
     onError: (err) => {
@@ -38,7 +42,7 @@ const NewUser = () => {
       // nameReason: e?.target?.nameReason?.value?.trim(),
       birthday: e?.target?.birthday?.value?.trim(),
     };
-    
+
     // --> Form validation
     if (
       [

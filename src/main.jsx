@@ -25,6 +25,8 @@ import SearchService from "./pages/SearchService/SearchService";
 import ConfirmAccount from "./pages/ConfirmAccount/ConfirmAccount";
 import RegisterService from "./admin/pages/RegisterService/RegisterService";
 import ServicesListClient from "./admin/pages/ServicesListClient/ServicesListClient";
+import UsersList from "./admin/pages/UsersList/UsersList";
+import ClientList from "./admin/pages/ClientList/ClientList";
 
 import PrivateRoutes from "./auth/PrivateRoutes";
 import PublicRoutes from "./auth/PublicRoutes";
@@ -78,8 +80,18 @@ const router = createBrowserRouter([
           },
 
           {
+            path: "/admin/lista-usuarios",
+            element: <UsersList />,
+          },
+
+          {
             path: "/admin/nuevo-cliente",
             element: <NewClient />,
+          },
+
+          {
+            path: "/admin/lista-clientes",
+            element: <ClientList />,
           },
 
           {

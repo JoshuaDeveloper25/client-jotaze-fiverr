@@ -178,14 +178,32 @@ const Sidebar = () => {
                     NUEVO USUARIO
                   </MenuItem>
                   <MenuItem
-                    sx={{ fontSize: ".8rem" }}
+                    to={`/admin/lista-usuarios`}
+                    component={NavLink}
+                    sx={{
+                      fontSize: ".8rem",
+                      color: `${
+                        location?.pathname === "/admin/lista-usuarios"
+                          ? "#188754"
+                          : "#000"
+                      }`,
+                      background: `${
+                        location?.pathname === "/admin/lista-usuarios"
+                          ? "rgba(211, 211, 211, .2)"
+                          : "transparent"
+                      }`,
+                    }}
                     onClick={() => setAnchorEl1(null)}
                   >
                     LISTA DE USUARIOS
                   </MenuItem>
                 </Menu>
               </div>
+            </>
+          ) : null}
 
+          {userInfo?.role === "admin" || userInfo?.role === "user" ? (
+            <>
               {/* Clientes */}
               <div>
                 <Button
@@ -237,8 +255,22 @@ const Sidebar = () => {
                     NUEVO CLIENTE
                   </MenuItem>
                   <MenuItem
-                    sx={{ fontSize: ".8rem" }}
-                    onClick={() => setAnchorEl2(null)}
+                   to={`/admin/lista-clientes`}
+                   component={NavLink}
+                   sx={{
+                     fontSize: ".8rem",
+                     color: `${
+                       location?.pathname === "/admin/lista-clientes"
+                         ? "#188754"
+                         : "#000"
+                     }`,
+                     background: `${
+                       location?.pathname === "/admin/lista-clientes"
+                         ? "rgba(211, 211, 211, .2)"
+                         : "transparent"
+                     }`,
+                   }}
+                    onClick={() => setAnchorEl2(null)}          
                   >
                     LISTA DE CLIENTES
                   </MenuItem>

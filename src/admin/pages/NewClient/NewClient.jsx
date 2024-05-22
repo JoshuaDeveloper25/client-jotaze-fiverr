@@ -1,6 +1,7 @@
 import { Box, Container, Typography } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { getError } from "../../../utils/getError";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Form from "./components/Form";
 import { useState } from "react";
@@ -8,6 +9,7 @@ import axios from "axios";
 
 const NewClient = () => {
   const [personType, setPersonType] = useState("");
+  const navigate = useNavigate();
 
   const { mutate, isPending } = useMutation({
     mutationFn: async (userInfo) =>
@@ -17,6 +19,7 @@ const NewClient = () => {
       ),
     onSuccess: (res) => {
       toast.success(`¡Nuevo Cliente Creado!`);
+      navigate("/admin/lista-clientes");
       console.log(res);
     },
     onError: (err) => {
@@ -41,26 +44,6 @@ const NewClient = () => {
       nameReason: e?.target?.nameReason?.value?.trim(),
       birthday: e?.target?.birthday?.value?.trim(),
     };
-
-    // --> Form validation
-    if (
-      [
-        personType === "Natural" && clientInfo?.firstName,
-        personType === "Natural" && clientInfo?.lastName,
-        personType === "Natural" && clientInfo?.birthday,
-        personType === "Natural" && clientInfo?.dni,
-        personType === "Juridico" && clientInfo?.phoneNumber,
-        personType === "Juridico" && clientInfo?.personType,
-        personType === "Juridico" && clientInfo?.nameReason,
-        personType === "Juridico" && clientInfo?.password,
-        personType === "Juridico" && clientInfo?.email,
-        personType === "Juridico" && clientInfo?.ruc,
-      ].includes("")
-    ) {
-      return toast.error("¡Llena los espacios disponibles!");
-    } else if (clientInfo.password !== clientInfo.repeatPassword) {
-      return toast.error("¡Contraseñas no coinciden!");
-    }
 
     let conditionalClientInfo = {};
 
@@ -88,18 +71,14 @@ const NewClient = () => {
       };
     }
 
-    mutate({
-      tipoPersona: clientInfo?.personType,
-      dni: clientInfo?.dni,
-      nombres: clientInfo?.firstName,
-      apellidos: clientInfo?.lastName,
-      fechaNacimiento: clientInfo?.birthday,
-      email: clientInfo?.email,
-      numeroCelular: clientInfo?.phoneNumber,
-      password: clientInfo?.password,
-      numeroRuc: clientInfo?.ruc,
-      nombreRazonSocial: clientInfo?.nameReason,
-    });
+    // --> Form validation
+    if (Object.values(conditionalClientInfo).includes("")) {
+      return toast.error("¡Llena los espacios disponibles!");
+    } else if (clientInfo.password !== clientInfo.repeatPassword) {
+      return toast.error("¡Contraseñas no coinciden!");
+    }
+    
+    mutate(conditionalClientInfo);
   };
 
   const handleChange = (e) => {
