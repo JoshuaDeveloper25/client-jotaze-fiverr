@@ -116,7 +116,7 @@ const ClientXService = () => {
         <Form
           searchedClient={searchClientMutation?.data?.data}
           handleSearchClient={handleSearchClient}
-          isPending={isPending}
+          isPending={isPending || searchClientMutation?.isPending}
           handleSubmit={handleSubmit}
           setService={setService}
           service={service}

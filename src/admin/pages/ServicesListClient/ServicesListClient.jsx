@@ -101,9 +101,6 @@ const ServicesListClient = () => {
     setFilterDateColumn(objetosFiltrados);
   };
 
-  console.log(data)
-  console.log(error)
-
   return (
     <Box component="section">
       <Container maxWidth={`lg`}>

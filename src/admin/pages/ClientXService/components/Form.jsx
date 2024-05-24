@@ -6,6 +6,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AppContext from "../../../../context/AppProvider";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+import SelectServices from "../../../../components/SelectServices";
 import {
   Box,
   Button,
@@ -53,7 +54,7 @@ const Form = ({
             />
           </Box>
 
-          <Button variant="contained" type="submit">
+          <Button disabled={isPending} variant="contained" type="submit">
             <FollowTheSignsOutlinedIcon
               sx={{ marginRight: ".4rem" }}
               fontSize="small"
@@ -68,7 +69,7 @@ const Form = ({
         sx={{
           display: "flex",
           flexDirection: "column",
-          gap: "1.5rem",
+          gap: "1rem",
           maxWidth: "30rem",
           margin: "auto",
         }}
@@ -179,116 +180,19 @@ const Form = ({
           sx={{
             display: "flex",
             flexDirection: "column",
-            gap: "1.5rem",
+            gap: "1rem",
           }}
         >
-          <FormControl focused fullWidth>
-            <InputLabel focused id="demo-simple-select-label">
-              CLASE DE SERVICIO
-            </InputLabel>
-            <Select
-              size="small"
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              label="CLASE DE SERVICIO"
-              value={classService}
-              onChange={(e) => setClassService(e.target.value)}
-              name="tipoServicio"
-              defaultValue={""}
-            >
-              <MenuItem value={"Contable"}>Contable</MenuItem>
-              <MenuItem value={"Juridico"}>Jurídico</MenuItem>
-              <MenuItem value={"Transporte"}>Transporte</MenuItem>
-            </Select>
-          </FormControl>
+          <SelectServices
+            classService={classService}
+            setClassService={setClassService}
+            nameInputClass="tipoServicio"
+            nameInputType={"servicio"}
+            setTypeService={setService}
+            typeService={service}
+          />
 
-          <FormControl size="small" focused fullWidth>
-            <InputLabel focused id="demo-simple-select-label">
-              SERVICIO
-            </InputLabel>
-
-            {classService === "Contable" ? (
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                label="SERVICIO"
-                name="servicio"
-                disabled={!classService}
-                value={service}
-                onChange={(e) => setService(e.target.value)}
-                defaultValue={""}
-              >
-                <MenuItem value={"contable1"}>
-                  Cambio de Regimén Tributario
-                </MenuItem>
-                <MenuItem value={"contable2"}>
-                  Elaboración de Estados Financieros
-                </MenuItem>
-                <MenuItem value={"contable3"}>Reporte Ficha Ruc</MenuItem>
-              </Select>
-            ) : classService === "Juridico" ? (
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                label="SERVICIO"
-                name="servicio"
-                disabled={!classService}
-                value={service}
-                onChange={(e) => setService(e.target.value)}
-                defaultValue={""}
-              >
-                <MenuItem value={"juridico1"}>
-                  Elaboración Minuta Compra-Venta
-                </MenuItem>
-                <MenuItem value={"juridico2"}>
-                  Aumento de Capital Social
-                </MenuItem>
-                <MenuItem value={"juridico3"}>
-                  Registro Propiedad Vehicular
-                </MenuItem>
-              </Select>
-            ) : classService === "Transporte" ? (
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                label="SERVICIO"
-                name="servicio"
-                disabled={!classService}
-                value={service}
-                onChange={(e) => setService(e.target.value)}
-                defaultValue={""}
-              >
-                <MenuItem value={"transporte1"}>
-                  Obtención Permiso Transporte Turism
-                </MenuItem>
-                <MenuItem value={"transporte2"}>
-                  Certificado de Bonificación
-                </MenuItem>
-                <MenuItem value={"transporte3"}>Cambio de Motor</MenuItem>
-              </Select>
-            ) : (
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                label="SERVICIO"
-                name="servicio"
-                disabled={!classService}
-                value={service}
-                onChange={(e) => setService(e.target.value)}
-                defaultValue={""}
-              >
-                <MenuItem value={"contable1"}>
-                  Cambio de Regimén Tributario
-                </MenuItem>
-                <MenuItem value={"contable2"}>
-                  Elaboración de Estados Financieros
-                </MenuItem>
-                <MenuItem value={"contable3"}>Reporte Ficha Ruc</MenuItem>
-              </Select>
-            )}
-          </FormControl>
-
-          <Box sx={{ display: "flex", gap: "1rem" }}>
+          <Box>
             <Box sx={{ flex: "1" }}>
               <TextField
                 label="DETALLE"

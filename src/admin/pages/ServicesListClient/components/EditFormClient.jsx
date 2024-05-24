@@ -15,6 +15,7 @@ import {
   MenuItem,
   Typography,
 } from "@mui/material";
+import SelectServices from "../../../../components/SelectServices";
 
 const EditFormClient = ({
   handleSubmit,
@@ -27,7 +28,6 @@ const EditFormClient = ({
   setOpen,
   infoRow,
 }) => {
-  console.log(classService);
   return (
     <Box
       component={"form"}
@@ -40,104 +40,14 @@ const EditFormClient = ({
         margin: "auto",
       }}
     >
-      <FormControl  variant="filled" fullWidth>
-        <InputLabel id="demo-simple-select-label">CLASE DE SERVICIO</InputLabel>
-        <Select
-          size="small"
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          label="CLASE DE SERVICIO"
-          value={classService}
-          onChange={(e) => setClassService(e.target.value)}
-          name="tipoServicio"
-        >
-          <MenuItem value={"Contable"}>Contable</MenuItem>
-          <MenuItem value={"Juridico"}>Jurídico</MenuItem>
-          <MenuItem value={"Transporte"}>Transporte</MenuItem>
-        </Select>
-      </FormControl>
-
-      <FormControl size="small" variant="filled" fullWidth>
-        <InputLabel focused id="demo-simple-select-label">
-          SERVICIO
-        </InputLabel>
-
-        {classService === "Contable" ? (
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="SERVICIO"
-            name="servicio"
-            disabled={!classService}
-            value={service}
-            onChange={(e) => setService(e.target.value)}
-          >
-            <MenuItem value={"contable1"}>
-              Cambio de Regimén Tributario
-            </MenuItem>
-            <MenuItem value={"contable2"}>
-              Elaboración de Estados Financieros
-            </MenuItem>
-            <MenuItem value={"contable3"}>Reporte Ficha Ruc</MenuItem>
-          </Select>
-        ) : classService === "Juridico" ? (
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="SERVICIO"
-            name="servicio"
-            disabled={!classService}
-            value={service}
-            onChange={(e) => setService(e.target.value)}
-          >
-            <MenuItem value={"juridico1"}>
-              Elaboración Minuta Compra-Venta
-            </MenuItem>
-            <MenuItem value={"juridico2"}>Aumento de Capital Social</MenuItem>
-            <MenuItem value={"juridico3"}>
-              Registro Propiedad Vehicular
-            </MenuItem>
-          </Select>
-        ) : classService === "Transporte" ? (
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="SERVICIO"
-            name="servicio"
-            disabled={!classService}
-            value={service}
-            onChange={(e) => setService(e.target.value)}
-            
-          >
-            <MenuItem value={"transporte1"}>
-              Obtención Permiso Transporte Turism
-            </MenuItem>
-            <MenuItem value={"transporte2"}>
-              Certificado de Bonificación
-            </MenuItem>
-            <MenuItem value={"transporte3"}>Cambio de Motor</MenuItem>
-          </Select>
-        ) : (
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="SERVICIO"
-            name="servicio"
-            disabled={!classService}
-            value={service}
-            onChange={(e) => setService(e.target.value)}
-            
-          >
-            <MenuItem value={"contable1"}>
-              Cambio de Regimén Tributario
-            </MenuItem>
-            <MenuItem value={"contable2"}>
-              Elaboración de Estados Financieros
-            </MenuItem>
-            <MenuItem value={"contable3"}>Reporte Ficha Ruc</MenuItem>
-          </Select>
-        )}
-      </FormControl>
+      <SelectServices
+        classService={classService}
+        setClassService={setClassService}
+        nameInputClass="tipoServicio"
+        nameInputType={"servicio"}
+        setTypeService={setService}
+        typeService={service}
+      />
 
       <Box sx={{ display: "flex", gap: "1rem" }}>
         <Box sx={{ flex: "1" }}>
@@ -188,6 +98,7 @@ const EditFormClient = ({
           variant="outlined"
           color="error"
           sx={{ width: "100%" }}
+          disabled={isPending}
         >
           <ArrowBackIcon fontSize="small" />
           Cerrar

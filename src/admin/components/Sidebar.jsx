@@ -255,22 +255,22 @@ const Sidebar = () => {
                     NUEVO CLIENTE
                   </MenuItem>
                   <MenuItem
-                   to={`/admin/lista-clientes`}
-                   component={NavLink}
-                   sx={{
-                     fontSize: ".8rem",
-                     color: `${
-                       location?.pathname === "/admin/lista-clientes"
-                         ? "#188754"
-                         : "#000"
-                     }`,
-                     background: `${
-                       location?.pathname === "/admin/lista-clientes"
-                         ? "rgba(211, 211, 211, .2)"
-                         : "transparent"
-                     }`,
-                   }}
-                    onClick={() => setAnchorEl2(null)}          
+                    to={`/admin/lista-clientes`}
+                    component={NavLink}
+                    sx={{
+                      fontSize: ".8rem",
+                      color: `${
+                        location?.pathname === "/admin/lista-clientes"
+                          ? "#188754"
+                          : "#000"
+                      }`,
+                      background: `${
+                        location?.pathname === "/admin/lista-clientes"
+                          ? "rgba(211, 211, 211, .2)"
+                          : "transparent"
+                      }`,
+                    }}
+                    onClick={() => setAnchorEl2(null)}
                   >
                     LISTA DE CLIENTES
                   </MenuItem>
@@ -357,26 +357,70 @@ const Sidebar = () => {
               )}
 
               {userInfo?.role === "admin" ? (
-                <MenuItem
-                  to={`/admin/lista-servicios`}
-                  component={NavLink}
-                  sx={{
-                    fontSize: ".8rem",
-                    color: `${
-                      location?.pathname === "/admin/lista-servicios"
-                        ? "#188754"
-                        : "#000"
-                    }`,
-                    background: `${
-                      location?.pathname === "/admin/lista-servicios"
-                        ? "rgba(211, 211, 211, .2)"
-                        : "transparent"
-                    }`,
-                  }}
-                  onClick={() => setAnchorEl3(null)}
-                >
-                  LISTA DE SERVICIOS
-                </MenuItem>
+                <div>
+                  <MenuItem
+                    to={`/admin/agregar-servicios`}
+                    component={NavLink}
+                    sx={{
+                      fontSize: ".8rem",
+                      color: `${
+                        location?.pathname === "/admin/agregar-servicios"
+                          ? "#188754"
+                          : "#000"
+                      }`,
+                      background: `${
+                        location?.pathname === "/admin/agregar-servicios"
+                          ? "rgba(211, 211, 211, .2)"
+                          : "transparent"
+                      }`,
+                    }}
+                    onClick={() => setAnchorEl3(null)}
+                  >
+                    AGREGAR SERVICIOS
+                  </MenuItem>
+
+                  <MenuItem
+                    to={`/admin/lista-servicios`}
+                    component={NavLink}
+                    sx={{
+                      fontSize: ".8rem",
+                      color: `${
+                        location?.pathname === "/admin/lista-servicios"
+                          ? "#188754"
+                          : "#000"
+                      }`,
+                      background: `${
+                        location?.pathname === "/admin/lista-servicios"
+                          ? "rgba(211, 211, 211, .2)"
+                          : "transparent"
+                      }`,
+                    }}
+                    onClick={() => setAnchorEl3(null)}
+                  >
+                    LISTA DE SERVICIOS
+                  </MenuItem>
+
+                  <MenuItem
+                    to={`/admin/lista-servicios-registrados`}
+                    component={NavLink}
+                    sx={{
+                      fontSize: ".8rem",
+                      color: `${
+                        location?.pathname === "/admin/lista-servicios-registrados"
+                          ? "#188754"
+                          : "#000"
+                      }`,
+                      background: `${
+                        location?.pathname === "/admin/lista-servicios-registrados"
+                          ? "rgba(211, 211, 211, .2)"
+                          : "transparent"
+                      }`,
+                    }}
+                    onClick={() => setAnchorEl3(null)}
+                  >
+                    LISTA DE SERVICIOS REGISTRADOS
+                  </MenuItem>                  
+                </div>
               ) : null}
 
               {userInfo?.role === "client" ? (

@@ -79,7 +79,7 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
                   fontSize: '.9rem',
                 }}
               >
-                Tipo Servicio
+                Clase Servicio
               </Typography>
             </Box>
           ),
