@@ -7,10 +7,9 @@ const AppProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("userInfo")) || {}
   );
-
-  axios.defaults.headers.common["Authorization"] = `Bearer ${
-    userInfo?.token || null
-  }`;
+  
+  axios.defaults.headers.common["Authorization"] = `Bearer ${userInfo?.token ||
+    null}`;
 
   return (
     <AppContext.Provider value={{ setUserInfo, userInfo }}>

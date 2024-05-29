@@ -19,7 +19,6 @@ const EditClientForm = ({
   setPersonType,
 }) => {
 
-  console.log(infoRow)
   const handleChange = (e) => {
     setPersonType(e?.target?.value);
   };

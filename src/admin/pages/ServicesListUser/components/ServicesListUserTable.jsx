@@ -5,22 +5,22 @@ import { Table } from "../../../../components/Table";
 import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import AccessibilityIcon from "@mui/icons-material/Accessibility";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Link, Link as RouterLink, useNavigate } from "react-router-dom";
 import TroubleshootIcon from "@mui/icons-material/Troubleshoot";
-import { formatoFecha } from "../../../../utils/dateUtilities.js";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
+import AppContext from "../../../../context/AppProvider";
 import NumbersIcon from "@mui/icons-material/Numbers";
-import { Link, Link as RouterLink } from "react-router-dom";
 import InfoIcon from "@mui/icons-material/Info";
-import { useState } from "react";
-import { getError } from "../../../../utils/getError";
-import { toast } from "react-toastify";
+import EditFormUser from "./EditFormUser";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import { formatoFecha } from "../../../../utils/dateUtilities";
 
-const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
+const ServicesListUserTable = ({ services = [], setFiltering, filtering }) => {
   const queryClient = useQueryClient();
 
   return (
@@ -86,7 +86,7 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
                   fontSize: ".9rem",
                 }}
               >
-                Clase Servicio
+                Tipo Servicio
               </Typography>
             </Box>
           ),
@@ -94,41 +94,6 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
 
         {
           id: "col4",
-          accessorKey: "",
-          header: () => {
-            return (
-              <Box sx={{ display: "flex", alignItems: "center", gap: ".2rem" }}>
-                <AccessibilityIcon />
-
-                <Typography
-                  variant="subtitle1"
-                  sx={{
-                    fontWeight: "bold",
-                    textTransform: "uppercase",
-                    fontSize: ".9rem",
-                  }}
-                >
-                  Cliente
-                </Typography>
-              </Box>
-            );
-          },
-          cell: (info) => {
-            const value = info.cell.row.original;
-
-            return (
-              <>
-                <p>
-                  {value?.clienteInfo?.nombres ||
-                    value?.clienteInfo?.nombreRazonSocial}
-                </p>
-              </>
-            );
-          },
-        },
-
-        {
-          id: "col5",
           accessorKey: "detalle",
           header: () => (
             <Box sx={{ display: "flex", alignItems: "center", gap: ".2rem" }}>
@@ -150,7 +115,7 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
         },
 
         {
-          id: "col6",
+          id: "col5",
           accessorKey: "",
           header: () => (
             <Box sx={{ display: "flex", alignItems: "center", gap: ".2rem" }}>
@@ -197,7 +162,7 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
         },
 
         {
-          id: "col7",
+          id: "col6",
           accessorKey: "fechaHoraAccion",
           header: () => (
             <Box sx={{ display: "flex", alignItems: "center", gap: ".2rem" }}>
@@ -218,7 +183,7 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
         },
 
         {
-          id: "col8",
+          id: "col7",
           accessorKey: "estado",
           header: () => (
             <Box sx={{ display: "flex", alignItems: "center", gap: ".2rem" }}>
@@ -239,7 +204,7 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
         },
 
         {
-          id: "col9",
+          id: "col8",
           cell: (info) => {
             const value = info?.cell?.row?.original;
 
@@ -253,7 +218,7 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
               onSuccess: (data) => {
                 toast.success("¡Recibido exitosamente!");
                 queryClient.invalidateQueries({
-                  queryKey: ["allServices"],
+                  queryKey: ["allServicesUser"],
                 });
               },
               onError: (err) => {
@@ -272,7 +237,7 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
               onSuccess: (data) => {
                 toast.success("¡Atendido exitosamente!");
                 queryClient.invalidateQueries({
-                  queryKey: ["allServices"],
+                  queryKey: ["allServicesUser"],
                 });
               },
               onError: (err) => {
@@ -291,7 +256,7 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
               onSuccess: (data) => {
                 toast.success("¡Rechazado exitosamente!");
                 queryClient.invalidateQueries({
-                  queryKey: ["allServices"],
+                  queryKey: ["allServicesUser"],
                 });
               },
               onError: (err) => {
@@ -375,30 +340,30 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
                     </Button>
 
                     <Button
+                      onClick={handleRegretService}
+                      variant="contained"
+                      size="small"
+                      color="error"
                       disabled={
                         receiveServiceMutation?.isPending ||
                         attendedServiceMutation?.isPending ||
                         regretServiceMutation?.isPending
                       }
-                      variant="contained"
-                      size="small"
-                      color="error"
-                      onClick={handleRegretService}
                     >
                       Rechazar
                     </Button>
 
                     <Button
                       onClick={handleAttendedService}
+                      variant="contained"
+                      size="small"
+                      color="secondary"
+                      sx={{ margin: "0 .4rem" }}
                       disabled={
                         receiveServiceMutation?.isPending ||
                         attendedServiceMutation?.isPending ||
                         regretServiceMutation?.isPending
                       }
-                      variant="contained"
-                      size="small"
-                      color="secondary"
-                      sx={{ margin: "0 .4rem" }}
                     >
                       Atendido
                     </Button>
@@ -426,34 +391,14 @@ const ServicesListTable = ({ services = [], setFiltering, filtering }) => {
             );
           },
         },
-
-        {
-          id: "col10",
-          accessorKey: "observacion",
-          header: () => (
-            <Box sx={{ display: "flex", alignItems: "center", gap: ".2rem" }}>
-              <VisibilityIcon />
-
-              <Typography
-                variant="subtitle1"
-                sx={{
-                  fontWeight: "bold",
-                  textTransform: "uppercase",
-                  fontSize: ".9rem",
-                }}
-              >
-                Obvervación
-              </Typography>
-            </Box>
-          ),
-        },
       ]}
     />
   );
 };
 
-export default ServicesListTable;
+export default ServicesListUserTable;
 
+// Detalle Modal
 const CellCustom = ({ info }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -475,11 +420,10 @@ const CellCustom = ({ info }) => {
 
       <ModalComponent
         modalTitle={"Detalle:"}
+        modalWidth={400}
         modalText={value?.detalle}
         handleClose={handleClose}
         open={open}
-        modalMinHeight={200}
-        modalWidth={500}
       />
     </>
   );

@@ -21,8 +21,6 @@ const SelectInputComponent = ({
 
   if (isError) return <p>Ocurrio Algo</p>;
 
-  console.log(data);
-
   return (
     <FormControl size="small" focused fullWidth disabled={isLoading}>
       <InputLabel focused id="demo-simple-select-label">

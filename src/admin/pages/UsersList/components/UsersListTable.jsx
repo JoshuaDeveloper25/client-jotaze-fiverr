@@ -38,7 +38,6 @@ const UsersListTable = ({ users = [], setFiltering, filtering }) => {
           },
           cell: (info) => {
             const value = info?.cell?.row?.original;
-            console.log(value);
             return (
               <Typography
                 variant="subtitle1"
@@ -214,7 +213,6 @@ const ModalComponentEdit = ({ info }) => {
         data
       ),
     onSuccess: (data) => {
-      console.log(data);
       queryClient.invalidateQueries(["allUsers"]);
       toast.success("¡Usuario Editado Exitosamente!");
       setOpen(false);

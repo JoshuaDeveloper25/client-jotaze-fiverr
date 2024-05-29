@@ -30,8 +30,6 @@ const Form = ({ handleSubmit, isPending }) => {
     setService('');
   };
 
-  console.log({ classService, service });
-
   return (
     <Box
       component={'form'}

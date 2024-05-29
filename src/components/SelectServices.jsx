@@ -11,6 +11,7 @@ const SelectServices = ({
   classService,
   setTypeService,
   typeService,
+  showTypeService = true,
 }) => {
   const { data, error, isError, isFetched, isLoading } = useQuery({
     queryKey: ["allServicesListRegistered"],
@@ -30,7 +31,7 @@ const SelectServices = ({
   return (
     <>
       <FormControl size="small" focused fullWidth disabled={isLoading}>
-        <InputLabel focused id="demo-simple-select-label" >
+        <InputLabel focused id="demo-simple-select-label">
           {"CLASE DE SERVICIO"}
         </InputLabel>
 
@@ -48,36 +49,37 @@ const SelectServices = ({
           ))}
         </Select>
       </FormControl>
-
-      <FormControl
-        size="small"
-        focused
-        fullWidth
-        disabled={
-          isLoading ||
-          !data?.data?.find((item) => item?.claseServicio === classService)
-        }
-      >
-        <InputLabel focused id="demo-simple-select-label">
-          {"TIPO DE SERVICIO"}
-        </InputLabel>
-
-        <Select
-          label={"TIPO DE SERVICIO"}
-          name={nameInputType}
-          defaultValue={""}
-          onChange={(e) => setTypeService(e?.target?.value)}
-          value={typeService}
+      {showTypeService && (
+        <FormControl
+          size="small"
+          focused
+          fullWidth
+          disabled={
+            isLoading ||
+            !data?.data?.find((item) => item?.claseServicio === classService)
+          }
         >
-          {data?.data
-            ?.find((item) => item?.claseServicio === classService)
-            ?.tipoServicio?.map((item, idx) => (
-              <MenuItem value={item?.descripcion} key={idx}>
-                {item?.descripcion}
-              </MenuItem>
-            ))}
-        </Select>
-      </FormControl>
+          <InputLabel focused id="demo-simple-select-label">
+            {"TIPO DE SERVICIO"}
+          </InputLabel>
+
+          <Select
+            label={"TIPO DE SERVICIO"}
+            name={nameInputType}
+            defaultValue={""}
+            onChange={(e) => setTypeService(e?.target?.value)}
+            value={typeService}
+          >
+            {data?.data
+              ?.find((item) => item?.claseServicio === classService)
+              ?.tipoServicio?.map((item, idx) => (
+                <MenuItem value={item?.descripcion} key={idx}>
+                  {item?.descripcion}
+                </MenuItem>
+              ))}
+          </Select>
+        </FormControl>
+      )}
     </>
   );
 };

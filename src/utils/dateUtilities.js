@@ -66,16 +66,42 @@ export function formatoFechaYearMonth(fecha) {
 
 export function formatearFechaMonth(fecha) {
   // Descomponer el string de fecha en año y mes
-  const [year, month] = fecha.split('-');
+  const [year, month] = fecha.split("-");
 
   // Array con los nombres de los meses en español
   const meses = [
-    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre",
   ];
 
   // Obtener el nombre del mes correspondiente
   const nombreMes = meses[parseInt(month) - 1];
 
   return `${nombreMes}`;
+}
+
+export function diasEntreFechas(fechaInicio, fechaFin) {
+  // Crear objetos de fecha
+  const date1 = new Date(fechaInicio);
+  const date2 = new Date(fechaFin);
+
+  // Calcular la diferencia en milisegundos
+  const diferenciaMilisegundos = date2 - date1;
+
+  // Convertir milisegundos a días
+  const milisegundosEnUnDia = 1000 * 60 * 60 * 24;
+  const diferenciaDias = diferenciaMilisegundos / milisegundosEnUnDia;
+
+  // Redondear hacia abajo para obtener el número de días completos y agregar 1
+  return Math.floor(diferenciaDias);
 }

@@ -189,7 +189,6 @@ const ModalComponentEdit = ({ info, isPending }) => {
       toast.success("¡Servicio editado exitosamente!");
       queryClient.invalidateQueries(["allServicesListRegistered"]);
       setOpen(false);
-      console.log(data);
     },
     onError: (err) => {
       toast.error(getError(err));

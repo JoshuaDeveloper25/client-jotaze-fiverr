@@ -41,14 +41,21 @@ const ClientXService = () => {
         serviceInfo
       ),
     onSuccess: (res) => {
+      if (userInfo?.role === "user") {
+        navigate("/admin/lista-servicios-usuario");
+      } else {
+        navigate("/admin/lista-servicios");
+      }
+
       if (userInfo?.role === "admin") {
         queryClient.invalidateQueries(["allServices"]);
-      } else {
+      } else if (userInfo?.role === "client") {
         queryClient.invalidateQueries(["allServicesClient"]);
+      } else {
+        queryClient.invalidateQueries(["allServicesUser"]);
       }
 
       toast.success(`¡Exitosamente solicitado!`);
-      navigate("/admin/lista-servicios");
     },
     onError: (err) => {
       toast.error(getError(err));

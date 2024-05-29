@@ -30,6 +30,9 @@ import ClientList from "./admin/pages/ClientList/ClientList";
 import ReferUser from "./pages/ReferUser/ReferUser";
 import AddService from "./admin/pages/AddService/AddService";
 import ServicesListRegistered from "./admin/pages/ServicesListRegistered/ServicesListRegistered";
+import AttendedClientXService from "./admin/pages/AttendedClientXService/AttendedClientXService";
+import ServicesByUser from "./admin/pages/ServicesByUser/ServicesByUser";
+import ServicesListUser from "./admin/pages/ServicesListUser/ServicesListUser";
 
 import PrivateRoutes from "./auth/PrivateRoutes";
 import PublicRoutes from "./auth/PublicRoutes";
@@ -123,6 +126,11 @@ const router = createBrowserRouter([
           },
 
           {
+            path: "/admin/lista-servicios-usuario",
+            element: <ServicesListUser />,
+          },
+
+          {
             path: "/admin/registrar-servicio",
             element: <RegisterService />,
           },
@@ -135,6 +143,16 @@ const router = createBrowserRouter([
           {
             path: "/admin/lista-servicios-registrados",
             element: <ServicesListRegistered />,
+          },
+
+          {
+            path: "/admin/servicios-atendidos-cliente",
+            element: <AttendedClientXService />,
+          },
+
+          {
+            path: "/admin/servicios-usuarios",
+            element: <ServicesByUser />,
           },
         ],
       },

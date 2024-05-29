@@ -29,7 +29,6 @@ const LogIn = () => {
       localStorage.setItem('userInfo', JSON.stringify(res.data));
       toast.success('¡Accedido exitosamente!');
       setUserInfo(res.data);
-      console.log(res);
       axios.defaults.headers.common[
         'Authorization'
       ] = `Bearer ${res?.data?.token}`;

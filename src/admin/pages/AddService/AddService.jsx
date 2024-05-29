@@ -20,7 +20,6 @@ const AddService = () => {
     onSuccess: (data) => {
       toast.success("¡Servicio creado exitosamente!");
       navigate("/admin/lista-servicios-registrados");
-      console.log(data);
     },
     onError: (err) => {
       toast.error(getError(err));

@@ -406,12 +406,14 @@ const Sidebar = () => {
                     sx={{
                       fontSize: ".8rem",
                       color: `${
-                        location?.pathname === "/admin/lista-servicios-registrados"
+                        location?.pathname ===
+                        "/admin/lista-servicios-registrados"
                           ? "#188754"
                           : "#000"
                       }`,
                       background: `${
-                        location?.pathname === "/admin/lista-servicios-registrados"
+                        location?.pathname ===
+                        "/admin/lista-servicios-registrados"
                           ? "rgba(211, 211, 211, .2)"
                           : "transparent"
                       }`,
@@ -419,7 +421,7 @@ const Sidebar = () => {
                     onClick={() => setAnchorEl3(null)}
                   >
                     LISTA DE SERVICIOS REGISTRADOS
-                  </MenuItem>                  
+                  </MenuItem>
                 </div>
               ) : null}
 
@@ -441,6 +443,29 @@ const Sidebar = () => {
                     }`,
                   }}
                   onClick={() => setAnchorEl3(null)}
+                >
+                  LISTA DE SERVICIOS
+                </MenuItem>
+              ) : null}
+
+              {userInfo?.role === "user" ? (
+                <MenuItem
+                  sx={{
+                    fontSize: ".8rem",
+                    color: `${
+                      location?.pathname === "/admin/lista-servicios-usuario"
+                        ? "#188754"
+                        : "#000"
+                    }`,
+                    background: `${
+                      location?.pathname === "/admin/lista-servicios-usuario"
+                        ? "rgba(211, 211, 211, .2)"
+                        : "transparent"
+                    }`,
+                  }}
+                  onClick={() => setAnchorEl3(null)}
+                  to={`/admin/lista-servicios-usuario`}
+                  component={NavLink}
                 >
                   LISTA DE SERVICIOS
                 </MenuItem>
@@ -482,13 +507,43 @@ const Sidebar = () => {
                   open={open4}
                 >
                   <MenuItem
-                    sx={{ fontSize: ".8rem" }}
+                    to={`/admin/servicios-atendidos-cliente`}
+                    component={NavLink}
+                    sx={{
+                      fontSize: ".8rem",
+                      color: `${
+                        location?.pathname ===
+                        "/admin/servicios-atendidos-cliente"
+                          ? "#188754"
+                          : "#000"
+                      }`,
+                      background: `${
+                        location?.pathname ===
+                        "/admin/servicios-atendidos-cliente"
+                          ? "rgba(211, 211, 211, .2)"
+                          : "transparent"
+                      }`,
+                    }}
                     onClick={() => setAnchorEl4(null)}
                   >
                     SERVICIOS ATENDIDOS X CLIENTE
                   </MenuItem>
                   <MenuItem
-                    sx={{ fontSize: ".8rem" }}
+                    to={`/admin/servicios-usuarios`}
+                    component={NavLink}
+                    sx={{
+                      fontSize: ".8rem",
+                      color: `${
+                        location?.pathname === "/admin/servicios-usuarios"
+                          ? "#188754"
+                          : "#000"
+                      }`,
+                      background: `${
+                        location?.pathname === "/admin/servicios-usuarios"
+                          ? "rgba(211, 211, 211, .2)"
+                          : "transparent"
+                      }`,
+                    }}
                     onClick={() => setAnchorEl4(null)}
                   >
                     SERVICIOS POR USUARIO

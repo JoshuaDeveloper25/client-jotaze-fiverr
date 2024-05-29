@@ -263,7 +263,6 @@ const ModalComponentEdit = ({ info }) => {
         data
       ),
     onSuccess: (data) => {
-      console.log(data);
       queryClient.invalidateQueries(["allClients"]);
       toast.success("Cliente Editado Exitosamente!");
       // setOpen(false);
@@ -323,7 +322,6 @@ const ModalComponentEdit = ({ info }) => {
         // password: clientInfo?.password,
       };
 
-      console.log(clientInfo);
     } else {
       // Juridica
       conditionalClientInfo = {
