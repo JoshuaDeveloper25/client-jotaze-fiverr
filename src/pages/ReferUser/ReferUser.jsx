@@ -23,7 +23,7 @@ const ReferUser = () => {
       toast.success(`¡Derivado exitosamente!`);
       queryClient.invalidateQueries(["allServicesClient"]);
       // navigate('/admin/');
-      navigate("/admin/lista-servicios-usuario");
+      navigate("/admin/lista-servicios");
     },
     onError: (err) => {
       console.log(err);

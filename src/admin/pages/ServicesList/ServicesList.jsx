@@ -153,10 +153,10 @@ const ServicesList = () => {
                   defaultValue={""}
                 >
                   <MenuItem value={"pendiente"}>Pendientes</MenuItem>
-                  <MenuItem value={"recibidos"}>Recibidos</MenuItem>
-                  <MenuItem value={"derivados"}>Derivados</MenuItem>
-                  <MenuItem value={"rechazados"}>Rechazados</MenuItem>
-                  <MenuItem value={"atentidos"}>Atendidos</MenuItem>
+                  <MenuItem value={"recibido"}>Recibidos</MenuItem>
+                  <MenuItem value={"derivado"}>Derivados</MenuItem>
+                  <MenuItem value={"rechazado"}>Rechazados</MenuItem>
+                  <MenuItem value={"atendido"}>Atendidos</MenuItem>
                 </Select>
               </FormControl>
 
